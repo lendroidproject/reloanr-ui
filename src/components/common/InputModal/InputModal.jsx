@@ -36,19 +36,22 @@ class InputModal extends Component {
             </div>
           }
           <h2>{props.title}</h2>
+          {props.description && <p>{props.description}</p>}
           <button onClick={props.onRequestClose}></button>
           <div className="ModalBody">
             <div style={{ width: '100%' }}>
               <div className="FillLoanAmount">
-                <div className="Label">Amount</div>
+                <div className="Label">{props.contentLabel === 'Private Key' ? props.contentLabel : 'Amount'}</div>
                 <div className="FormInputWrapper">
-                  <div className={`FormInput ${props.suffix}`}>
+                  <div className={`FormInput ${props.suffix ? 'Suffix' : ''} ${props.prefix ? 'Prefix' : ''}`}>
+                    <div className="Prefix">{props.prefix}</div>
                     <input
-                      type="number"
+                      type={props.type || 'number'}
                       onChange={props.onChange}
                       value={props.value}
                       min="0"
                       max={props.max}
+                      style={{ textAlign: props.type ? 'left' : 'center' }}
                     />
                     <div className="Suffix">{props.suffix}</div>
                     <div className="after"></div>

@@ -30,9 +30,9 @@ const shutCdpAsync = async (cdp) => {
   console.log('Transaction from shutting the CDP:', txn);
 };
 
-export const startAsync = async (amount, amountInDAI, callback = null) => {
+export const startAsync = async (amount, amountInDAI, privateKey = null, callback = null) => {
   const maker = Maker.create(process.env.REACT_APP_NETWORK, {
-    privateKey: process.env.REACT_APP_PRIVATE_KEY,
+    privateKey: privateKey || process.env.REACT_APP_PRIVATE_KEY,
     overrideMetamask: true
   })
   await maker._authenticatedPromise

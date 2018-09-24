@@ -24,6 +24,13 @@
       }
     }
 
+    &.Prefix {
+      input {
+        padding-left: 40px;
+        padding-right: 20px;
+      }
+    }
+
     input {
       width: 100%;
       border: 0;
@@ -66,6 +73,14 @@
         border-left: 0;
         border-right: 5px solid #e5e5e5;
       }
+    }
+
+    .Prefix {
+      position: absolute;
+      left: 13px;
+      top: 9px;
+      font-size: 14px;
+      color: rgba(0, 0, 0, .4);
     }
 
     .Suffix {
