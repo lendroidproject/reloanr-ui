@@ -8,7 +8,10 @@ import {
 
 import Orders from './components/Orders/Orders'
 import {
-  PageDesktop
+  PageDesktop,
+  PageMetaMaskLogIn,
+  PageMetaMaskMissing,
+  PageNotFound,
 } from './components/Pages'
 
 import './App.scss'
@@ -28,6 +31,15 @@ class App extends Component {
             />
             <Route exact path='/desktop'
               render={() => <PageDesktop />}
+            />
+            <Route exact path='/404'
+              render={() => <PageNotFound />}
+            />
+            <Route exact path='/metamask-missing'
+              render={() => <PageMetaMaskMissing />}
+            />
+            <Route exact path='/metamask-not-logged-in'
+              render={() => <PageMetaMaskLogIn />}
             />
           </Switch>
         </div>
