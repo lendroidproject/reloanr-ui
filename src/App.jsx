@@ -7,6 +7,9 @@ import {
 } from 'react-router-dom'
 
 import Orders from './components/Orders/Orders'
+import {
+  PageDesktop
+} from './components/Pages'
 
 import './App.scss'
 
@@ -22,6 +25,9 @@ class App extends Component {
           <Switch>
             <Route exact path='/'
               render={() => <Orders />}
+            />
+            <Route exact path='/desktop'
+              render={() => <PageDesktop />}
             />
           </Switch>
         </div>

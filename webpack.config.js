@@ -51,7 +51,8 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.css', '.scss'],
+    modules: [path.resolve(__dirname, './src'), 'node_modules'],
+    extensions: ['.js', '.jsx', '.css', '.scss', '.svg', '.jpg', '.png'],
   },
   plugins: [
     // new webpack.optimize.UglifyJsPlugin({
@@ -74,7 +75,7 @@ module.exports = {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.DefinePlugin({
-      'process.env' : {
+      'process.env': {
         'NODE_ENV': '"production"',
         'REACT_APP_PRIVATE_KEY': JSON.stringify(process.env.REACT_APP_PRIVATE_KEY),
         'REACT_APP_NETWORK': JSON.stringify(process.env.REACT_APP_NETWORK),

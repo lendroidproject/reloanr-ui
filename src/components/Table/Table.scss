@@ -50,7 +50,7 @@
           font-size: 0.8em;
         }
 
-        &:last-child {
+        &:last-child:not(:first-child) {
           text-align: right;
         }
       }
