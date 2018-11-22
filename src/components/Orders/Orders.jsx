@@ -21,20 +21,16 @@ class Orders extends Component {
     super(props)
 
     if (window.web3) {
-      const LendroidJS = new Lendroid({
-        stateCallback: () => this.forceUpdate(),
-      })
 
       this.state = {
-        LendroidJS,
-        Tables: CreateTables(LendroidJS.web3Utils),
+        LendroidJS: {},
+        Tables: [],
         metamaskChecking: true,
         metamaskLogged: false,
       }
     } else {
       this.state = {
-        LendroidJS: null,
-        // Tables: CreateTables(LendroidJS.web3Utils),
+        LendroidJS: {},
       }
     }
 
@@ -42,13 +38,30 @@ class Orders extends Component {
   }
 
   componentDidMount() {
+    this.checkMetamask();
+  }
+
+  checkMetamask() {
     if (window.web3) {
+      this.setState({
+        metamaskChecking: true,
+        metamaskLogged: false,
+      })
+
       window.web3.eth.getAccounts((err, accounts) => {
         if (accounts && accounts.length > 0) {
-          this.setState({
+          const newState = {
             metamaskLogged: true,
             metamaskChecking: false,
-          })
+          }
+          if (Object.keys(this.state.LendroidJS).length === 0) {
+            const LendroidJS = new Lendroid({
+              stateCallback: () => this.forceUpdate(),
+            })
+            newState['LendroidJS'] = LendroidJS
+            newState['Tables'] = CreateTables(LendroidJS.web3Utils)
+          }
+          this.setState(newState)
         } else {
           this.setState({
             metamaskChecking: false,
@@ -60,6 +73,10 @@ class Orders extends Component {
 
   getPositionsData() {
     const { LendroidJS } = this.state
+    if (!LendroidJS.positions) return {
+      lent: [],
+      borrowed: [],
+    }
     const { contracts: { positions }, exchangeRates: { currentDAIExchangeRate } } = LendroidJS
     if (!positions || currentDAIExchangeRate === 0) return {}
 
@@ -95,14 +112,14 @@ class Orders extends Component {
 
   render() {
     const {
-      LendroidJS,
+      LendroidJS = {},
       Tables,
       metamaskChecking,
       metamaskLogged,
     } = this.state
 
-    if (!LendroidJS) return <Redirect to="/metamask-missing" />
-    const { loading, orders, exchangeRates, contracts, web3Utils, metamask = {} } = LendroidJS
+    if (!window.web3) return <Redirect to="/metamask-missing" />
+    const { loading = {}, orders = { myOrders: {} }, exchangeRates = {}, contracts, web3Utils, metamask = {} } = LendroidJS
     const { address, network } = metamask
     const { currentWETHExchangeRate, currentDAIExchangeRate } = exchangeRates
     const offers = orders.orders
@@ -126,6 +143,8 @@ class Orders extends Component {
       onCancelOrder: LendroidJS.onCancelOrder,
       startAsync,
     }
+
+    if (!(network && address) && !metamaskChecking) this.checkMetamask()
 
     return (
       network && address ?
