@@ -28,6 +28,8 @@ class Orders extends Component {
       this.state = {
         LendroidJS,
         Tables: CreateTables(LendroidJS.web3Utils),
+        metamaskChecking: true,
+        metamaskLogged: false,
       }
     } else {
       this.state = {
@@ -37,6 +39,23 @@ class Orders extends Component {
     }
 
     this.apiPost = this.apiPost.bind(this)
+  }
+
+  componentDidMount() {
+    if (window.web3) {
+      window.web3.eth.getAccounts((err, accounts) => {
+        if (accounts && accounts.length > 0) {
+          this.setState({
+            metamaskLogged: true,
+            metamaskChecking: false,
+          })
+        } else {
+          this.setState({
+            metamaskChecking: false,
+          })
+        }
+      })
+    }
   }
 
   getPositionsData() {
@@ -75,7 +94,12 @@ class Orders extends Component {
   }
 
   render() {
-    const { LendroidJS, Tables } = this.state
+    const {
+      LendroidJS,
+      Tables,
+      metamaskChecking,
+      metamaskLogged,
+    } = this.state
 
     if (!LendroidJS) return <Redirect to="/metamask-missing" />
     const { loading, orders, exchangeRates, contracts, web3Utils, metamask = {} } = LendroidJS
@@ -132,7 +156,10 @@ class Orders extends Component {
             loading={loading.positions} />
         </div>
         :
-        <Redirect to="/metamask-not-logged-in" />
+        metamaskChecking || metamaskLogged ?
+          <div class="Checking">{metamaskChecking ? 'Metamask Checking...' : 'Loading...'}</div>
+          :
+          <Redirect to="/metamask-not-logged-in" />
     )
   }
 }
