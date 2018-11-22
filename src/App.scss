@@ -8,6 +8,14 @@ body * {
   outline: none;
 }
 
+.CurrentDevice {
+  position: fixed;
+  top: 0;
+  right: 0;
+  color: white;
+  padding: 10px;
+}
+
 @font-face {
   font-family: "SFProText-Regular";
   src: url('./assets/fonts/SF-Pro-Text-Regular.otf') format("opentype");
