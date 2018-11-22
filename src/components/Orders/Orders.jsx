@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
 import { Lendroid } from 'lendroid'
 import { startAsync } from './Maker'
@@ -19,13 +20,20 @@ class Orders extends Component {
   constructor(props) {
     super(props)
 
-    const LendroidJS = new Lendroid({
-      stateCallback: () => this.forceUpdate(),
-    })
+    if (window.web3) {
+      const LendroidJS = new Lendroid({
+        stateCallback: () => this.forceUpdate(),
+      })
 
-    this.state = {
-      LendroidJS,
-      Tables: CreateTables(LendroidJS.web3Utils),
+      this.state = {
+        LendroidJS,
+        Tables: CreateTables(LendroidJS.web3Utils),
+      }
+    } else {
+      this.state = {
+        LendroidJS: null,
+        // Tables: CreateTables(LendroidJS.web3Utils),
+      }
     }
 
     this.apiPost = this.apiPost.bind(this)
@@ -68,6 +76,8 @@ class Orders extends Component {
 
   render() {
     const { LendroidJS, Tables } = this.state
+
+    if (!LendroidJS) return <Redirect to="/metamask-missing" />
     const { loading, orders, exchangeRates, contracts, web3Utils, metamask = {} } = LendroidJS
     const { address, network } = metamask
     const { currentWETHExchangeRate, currentDAIExchangeRate } = exchangeRates
@@ -122,7 +132,7 @@ class Orders extends Component {
             loading={loading.positions} />
         </div>
         :
-        <div>No Metamask Detected</div>
+        <Redirect to="/metamask-not-logged-in" />
     )
   }
 }
