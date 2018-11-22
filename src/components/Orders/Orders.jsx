@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect';
 
 import { Lendroid } from 'lendroid'
 import { startAsync } from './Maker'
@@ -144,7 +145,7 @@ class Orders extends Component {
       startAsync,
     }
 
-    if (!(network && address) && !metamaskChecking) this.checkMetamask()
+    if (!(network && address) && !metamaskChecking && isBrowser) this.checkMetamask()
 
     return (
       network && address ?

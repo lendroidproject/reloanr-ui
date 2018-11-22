@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import FadeIn from 'react-fade-in'
-
+import { isBrowser, isChrome, isOpera, isChromium, isMobile, browserName, browserVersion } from 'react-device-detect';
 import {
   Route,
   Switch
@@ -24,22 +24,31 @@ class App extends Component {
   render() {
     return (
       <FadeIn>
-        <div className="AppWrapper">
-          <Switch>
-            <Route exact path='/'
-              render={() => <Orders />}
-            />
-            <Route exact path='/desktop'
-              render={() => <PageDesktop />}
-            />
-            <Route exact path='/metamask-missing'
-              render={() => <PageMetaMaskMissing />}
-            />
-            <Route exact path='/metamask-not-logged-in'
-              render={() => <PageMetaMaskLogIn />}
-            />
-            <Route render={() => <PageNotFound />} />
-          </Switch>
+        <div className={`AppWrapper ${browserName}`}>
+          {
+            ((isBrowser && (isChrome || isOpera || isChromium)) || (isMobile && (browserName === 'Chrome WebView'))) ?
+              <Switch>
+                <Route exact path='/'
+                  render={() => <Orders />}
+                />
+                <Route exact path='/metamask-missing'
+                  render={() => <PageMetaMaskMissing />}
+                />
+                <Route exact path='/metamask-not-logged-in'
+                  render={() => <PageMetaMaskLogIn />}
+                />
+                <Route render={() => <PageNotFound />} />
+              </Switch>
+              :
+              <div>
+                <div className="CurrentDevice">{browserName} - {browserVersion}</div>
+                <Switch>
+                  <Route path='/'
+                    render={() => <PageDesktop />}
+                  />
+                </Switch>
+              </div>
+          }
         </div>
       </FadeIn >
     )
