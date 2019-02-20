@@ -280,7 +280,7 @@ class FormTab extends Component {
             <Tab>Borrow</Tab>
             <Tab>Wrap/Unwrap ETH</Tab>
             <Tab>Allowance</Tab>
-            <Tab>Maker DAI</Tab>
+            {/* <Tab>Maker DAI</Tab> */}
           </TabList>
 
           <TabPanel>
@@ -343,7 +343,7 @@ class FormTab extends Component {
               </table>
             </FadeIn>
           </TabPanel>
-          <TabPanel>
+          {/* <TabPanel>
             <FadeIn>
               <table cellspacing="15" className="MakerDAITAble">
                 <tbody>
@@ -354,7 +354,7 @@ class FormTab extends Component {
                 </tbody>
               </table>
             </FadeIn>
-          </TabPanel>
+          </TabPanel> */}
         </Tabs >
         <InputModal
           isOpen={modalIsOpen}
