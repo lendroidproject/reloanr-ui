@@ -9,7 +9,7 @@
     "bootstrap": "^4.1.1",
     "dotenv": "^6.0.0",
     "file-loader": "^1.1.11",
-    "lendroid": "^2.1.0",
+    "lendroid": "2.3.0-beta.1",
     "moment": "^2.21.0",
     "react": "^16.2.0",
     "react-animations": "^1.0.0",
