@@ -133,17 +133,30 @@ const CreateTables = web3Utils => [
         precision: 2,
         style: { fontFamily: 'Space Mono', width: '33%' }
       },
+      // {
+      //   label: 'Total Interest ',
+      //   key: 'totalInterest',
+      //   precision: 5,
+      //   style: { fontFamily: 'Space Mono', width: '40%' }
+      // },
+      // {
+      //   label: 'Term',
+      //   key: 'loanDuration',
+      //   filter: 'calcTerm',
+      //   style: { fontFamily: 'Space Mono', width: '27%' }
+      // },
       {
-        label: 'Total Interest ',
-        key: 'totalInterest',
-        precision: 5,
-        style: { fontFamily: 'Space Mono', width: '40%' }
-      },
-      {
-        label: 'Term',
+        label: 'Term ',
         key: 'loanDuration',
         filter: 'calcTerm',
-        style: { fontFamily: 'Space Mono', width: '27%' }
+        style: { fontFamily: 'Space Mono', width: '40%', textAlign: 'center' }
+      },
+      {
+        label: 'Rate',
+        key: 'interestRate',
+        precision: 3,
+        suffix: '%',
+        style: { fontFamily: 'Space Mono', width: '27%', textAlign: 'center' }
       }
     ],
     data: {
@@ -156,9 +169,11 @@ const CreateTables = web3Utils => [
               : -1
           )
           .map(item => {
+            item.interestRate = item.interestRatePerDay // web3Utils.fromWei(item.interestRatePerDay)
             item.totalInterest =
-              web3Utils.fromWei(item.loanAmountOffered) *
-              item.interestRatePerDay // web3Utils.fromWei(item.interestRatePerDay)
+              (web3Utils.fromWei(item.loanAmountOffered) *
+                item.interestRatePerDay) /
+              100 // web3Utils.fromWei(item.interestRatePerDay)
             item.loanAmount = web3Utils.substractBN(
               item.loanAmountOffered,
               item.loanAmountFilled || 0
@@ -181,17 +196,30 @@ const CreateTables = web3Utils => [
         precision: 2,
         style: { fontFamily: 'Space Mono', width: '33%' }
       },
+      // {
+      //   label: 'Total Interest ',
+      //   key: 'totalInterest',
+      //   precision: 5,
+      //   style: { fontFamily: 'Space Mono', width: '40%' }
+      // },
+      // {
+      //   label: 'Term',
+      //   key: 'loanDuration',
+      //   filter: 'calcTerm',
+      //   style: { fontFamily: 'Space Mono', width: '27%' }
+      // },
       {
-        label: 'Total Interest ',
-        key: 'totalInterest',
-        precision: 5,
-        style: { fontFamily: 'Space Mono', width: '40%' }
-      },
-      {
-        label: 'Term',
+        label: 'Term ',
         key: 'loanDuration',
         filter: 'calcTerm',
-        style: { fontFamily: 'Space Mono', width: '27%' }
+        style: { fontFamily: 'Space Mono', width: '40%', textAlign: 'center' }
+      },
+      {
+        label: 'Rate',
+        key: 'interestRate',
+        precision: 3,
+        suffix: '%',
+        style: { fontFamily: 'Space Mono', width: '27%', textAlign: 'center' }
       }
     ],
     data: {
@@ -204,9 +232,11 @@ const CreateTables = web3Utils => [
               : -1
           )
           .map(item => {
+            item.interestRate = item.interestRatePerDay // web3Utils.fromWei(item.interestRatePerDay)
             item.totalInterest =
-              web3Utils.fromWei(item.loanAmountOffered) *
-              item.interestRatePerDay // web3Utils.fromWei(item.interestRatePerDay)
+              (web3Utils.fromWei(item.loanAmountOffered) *
+                item.interestRatePerDay) /
+              100 // web3Utils.fromWei(item.interestRatePerDay)
             item.loanAmount = web3Utils.substractBN(
               item.loanAmountOffered,
               item.loanAmountFilled || 0
