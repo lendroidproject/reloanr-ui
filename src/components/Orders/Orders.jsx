@@ -73,7 +73,7 @@ class Orders extends Component {
 
   getPositionsData() {
     const { LendroidJS } = this.state
-    if (!LendroidJS.positions) return {
+    if (!LendroidJS.contracts || !LendroidJS.contracts.positions) return {
       lent: [],
       borrowed: [],
     }

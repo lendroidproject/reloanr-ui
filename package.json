@@ -9,7 +9,7 @@
     "bootstrap": "^4.1.1",
     "dotenv": "^6.0.0",
     "file-loader": "^1.1.11",
-    "lendroid": "2.3.0-beta.1",
+    "lendroid": "2.4.0",
     "moment": "^2.21.0",
     "react": "^16.2.0",
     "react-animations": "^1.0.0",
@@ -62,5 +62,9 @@
     "webpack-bundle-analyzer": "^2.9.1",
     "webpack-combine-loaders": "^2.0.3",
     "webpack-dev-server": "^2.9.7"
-  }
+  },
+  "main": "index.js",
+  "repository": "git@github.com:lendroidproject/reloanr-ui.git",
+  "author": "alonavns <alona.vns@outlook.com>",
+  "license": "MIT"
 }
