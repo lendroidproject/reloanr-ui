@@ -284,6 +284,12 @@ const CreateTables = web3Utils => [
       type: 'dropdown',
       items: [
         {
+          label: 'Details',
+          slot: 'onDetails',
+          param: { isLend: false },
+          enabled: () => true
+        },
+        {
           label: 'Liquidate',
           slot: 'onLiquidatePosition',
           param: { isLend: false },
@@ -356,6 +362,12 @@ const CreateTables = web3Utils => [
       type: 'dropdown',
       items: [
         {
+          label: 'Details',
+          slot: 'onDetails',
+          param: { isLend: false },
+          enabled: () => true
+        },
+        {
           label: 'Top up collateral',
           slot: 'onTopupWithCollateral',
           param: { isLend: true },
@@ -366,7 +378,7 @@ const CreateTables = web3Utils => [
           slot: 'onRepayLoan',
           param: { isLend: true },
           enabled: checkLoanCanBeClosed
-        },
+        }
         // {
         //   label: 'Clean Contract',
         //   slot: 'onCleanContract',
