@@ -17,17 +17,17 @@ class FormTab extends Component {
     this.state = {
       // Lend/Borrow Form Inputs
       loanAmountOffered: 1.0,
-      interestRatePerDay: 0.008,
-      loanDuration: 60 * 3600,
+      interestRatePerDay: 5,
+      loanDuration: 48 * 3600,
       offerExpiry: 720,
       wrangler: 'Lendroid',
       allowance: 0,
 
       // Fee Form Inputs
-      relayerFeeLST: 0.0,
-      monitoringFeeLST: 0.0,
-      rolloverFeeLST: 0.0,
-      closureFeeLST: 0.0,
+      relayerFeeLST: 1.0,
+      monitoringFeeLST: 1.0,
+      rolloverFeeLST: 1.0,
+      closureFeeLST: 1.0,
 
       // Wrap/Unwrap ETH Form Inputs
       ETHBalance: 0,
