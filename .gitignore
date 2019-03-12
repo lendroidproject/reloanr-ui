@@ -21,7 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 
 *-lock.json
-*.lock
 
 /dist/*.js
 
