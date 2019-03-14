@@ -409,12 +409,6 @@ const CreateTables = web3Utils => [
           param: { isLend: true },
           enabled: checkLoanCanBeClosed
         }
-        // {
-        //   label: 'Clean Contract',
-        //   slot: 'onCleanContract',
-        //   param: { isLend: true },
-        //   enabled: checkLoanCanBeCleaned
-        // }
       ]
     }
   }

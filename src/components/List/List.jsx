@@ -119,7 +119,6 @@ class List extends Component {
 
   onSubmitTopupWithCollateral() {
     this.closeModal('modalAmountIsOpen')
-    // loanContractInstance.topupCollateral(topupCollateralAmount).send({from: userAddress})
 
     const { methods, web3Utils } = this.props
     const { currentData } = this.state
@@ -154,11 +153,6 @@ class List extends Component {
   onLiquidatePosition(data, param) {
     const { methods } = this.props
     console.log(data, param)
-    // Contract(
-    //   WranglerLoanRegistryABI,
-    //   loanContractInstance.owner())
-    //   .liquidate(address(loan), lenderAmount, borrowerAmount)
-    //   .send({ from: userAddress })
     methods.onLiquidatePosition(data, (err, hash) => {
       if (err) return
       console.log(hash)
@@ -169,19 +163,7 @@ class List extends Component {
   onRepayLoan(data, param) {
     const { methods } = this.props
     console.log(data, param)
-    // loan.close.send({from: userAddress})
     methods.onClosePosition(data, (err, hash) => {
-      if (err) return
-      console.log(hash)
-      setTimeout(methods.getPositions, 5000)
-    })
-  }
-
-  onCleanContract(data, param) {
-    const { methods } = this.props
-    console.log(data, param)
-    // WranglerLoanRegistry.releaseContract(loan.address, {from: address})
-    methods.onCleanContract(data, (err, hash) => {
       if (err) return
       console.log(hash)
       setTimeout(methods.getPositions, 5000)
@@ -191,7 +173,6 @@ class List extends Component {
   onClosePosition(data, param) {
     const { methods } = this.props
     console.log(data, param)
-    // loan.close.send({from: userAddress})
     methods.onClosePosition(data, (err, hash) => {
       if (err) return
       console.log(hash)

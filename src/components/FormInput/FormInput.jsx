@@ -113,9 +113,12 @@ class FormInput extends Component {
             const value = currentInput === id ? currentValue : values[index + 1]
             return index > 0 ? null : (
               <div
-                className={`FormInput ${
-                  item.arrow ? 'Arrow' : ''
-                }`} /*style={{ width: `calc(${100 / inputCount}% - ${inputCount > 1 ? '5px' : '0px'})` }}*/
+                className={`FormInput ${item.arrow ? 'Arrow' : ''}`}
+                style={{
+                  width: `calc(${100 / inputCount}% - ${
+                    inputCount > 1 ? '5px' : '0px'
+                  })`
+                }}
               >
                 {loading ? (
                   <div className='Loading'>
