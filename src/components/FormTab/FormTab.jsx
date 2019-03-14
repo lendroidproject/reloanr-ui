@@ -18,8 +18,8 @@ class FormTab extends Component {
       // Lend/Borrow Form Inputs
       loanAmountOffered: 1.0,
       interestRatePerDay: 5,
-      loanDuration: 48 * 3600,
-      offerExpiry: 720,
+      loanDuration: 2,
+      offerExpiry: 12,
       wrangler: 'Lendroid',
       allowance: 0,
 
@@ -142,7 +142,7 @@ class FormTab extends Component {
 
       delete postData.allowance
       postData.offerExpiry = parseInt(postData.offerExpiry / 1000).toString();
-
+console.log(postData); return;
       methods.onCreateOrder(postData)
     }
   }

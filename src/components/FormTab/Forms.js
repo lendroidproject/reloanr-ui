@@ -30,20 +30,12 @@ export function FormInputs(isLend) {
       key: 'loanDuration',
       label: 'Length',
       width: 150,
-      output: (val) => (val.toString()),
+      output: (val) => ((val * 24 * 3600).toString()),
       inputs: [{
         precision: 0,
-        arrow: true,
         step: 1,
-        suffix: 'd',
-        unit: 24 * 3600,
-      }, {
-        precision: 0,
-        arrow: true,
-        step: 1,
-        suffix: 'h',
-        max: 23,
-        unit: 1 * 3600
+        suffix: 'days',
+        unit: 1, // 24 * 3600,
       }],
       required: true
     }, {
@@ -52,22 +44,14 @@ export function FormInputs(isLend) {
       width: 150,
       output: (val) => {
         let ret = new moment.utc()
-        ret.add(val, 'm')
+        ret.add(val * 60, 'm')
         return ret.format('x')
       },
       inputs: [{
         precision: 0,
-        arrow: true,
         step: 1,
-        suffix: 'h',
-        unit: 60
-      }, {
-        precision: 0,
-        arrow: true,
-        step: 1,
-        suffix: 'm',
-        max: 60,
-        unit: 1
+        suffix: 'hours',
+        unit: 1, // 60
       }]
     }, {
       key: 'allowance',
@@ -152,7 +136,7 @@ export const WrapETHFormInputs = [
     output: (val) => (val.toString()),
     inputs: [{
       precision: 5,
-      suffix: 'ETH',
+      suffix: 'WETH',
       unit: 1
     }],
     readOnly: true,
@@ -169,7 +153,6 @@ export const WrapETHFormInputs = [
     output: (val) => (val.toString()),
     inputs: [{
       precision: 3,
-      suffix: 'ETH',
       unit: 1
     }],
     required: true
