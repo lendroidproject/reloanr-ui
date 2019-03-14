@@ -142,7 +142,7 @@ class FormTab extends Component {
 
       delete postData.allowance
       postData.offerExpiry = parseInt(postData.offerExpiry / 1000).toString();
-console.log(postData); return;
+
       methods.onCreateOrder(postData)
     }
   }
