@@ -3,6 +3,8 @@ import Modal from 'react-modal'
 
 import './InputModal.scss'
 
+Modal.setAppElement('body')
+
 const customStyles = {
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.75)',

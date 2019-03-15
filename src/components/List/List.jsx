@@ -12,6 +12,8 @@ import InputModal from '../common/InputModal/InputModal'
 
 import './List.scss'
 
+Modal.setAppElement('body')
+
 const customStyles = {
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.75)',
@@ -333,12 +335,14 @@ class List extends Component {
           <div className='ModalBody'>
             <div className='Info'>
               <table>
-                {Object.keys(modalData).map((key, kIndex) => (
-                  <tr key={kIndex}>
-                    <td>{key}</td>
-                    <td>{modalData[key].toString()}</td>
-                  </tr>
-                ))}
+                <tbody>
+                  {Object.keys(modalData).map((key, kIndex) => (
+                    <tr key={kIndex}>
+                      <td>{key}</td>
+                      <td>{modalData[key].toString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
             </div>
           </div>
