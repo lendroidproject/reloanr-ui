@@ -76,7 +76,7 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': '"production"',
+        'NODE_ENV': '"development"',
         'REACT_APP_PRIVATE_KEY': JSON.stringify(process.env.REACT_APP_PRIVATE_KEY),
         'REACT_APP_NETWORK': JSON.stringify(process.env.REACT_APP_NETWORK),
       }

@@ -10,7 +10,7 @@ class NotFound extends Component {
         <div className="NotFound">
           <h2 className="Title">Page Not Found</h2>
           <img className="NotFoundImg" src={NotFoundImg} />
-          <p class="Description">The page you are looking was loaned out. Visit our <a href="/" class="link">🏡</a> page instead.</p>
+          <p className="Description">The page you are looking was loaned out. Visit our <a href="/" className="link">🏡</a> page instead.</p>
         </div>
       </div>
     )

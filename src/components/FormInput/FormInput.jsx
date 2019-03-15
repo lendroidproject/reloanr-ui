@@ -114,6 +114,7 @@ class FormInput extends Component {
             return index > 0 ? null : (
               <div
                 className={`FormInput ${item.arrow ? 'Arrow' : ''}`}
+                key={index}
                 style={{
                   width: `calc(${100 / inputCount}% - ${
                     inputCount > 1 ? '5px' : '0px'
@@ -135,7 +136,7 @@ class FormInput extends Component {
                   readOnly={data.readOnly}
                 />
                 {item.arrow || !item.suffix ? null : (
-                  <div class='Suffix'>{item.suffix}</div>
+                  <div className='Suffix'>{item.suffix}</div>
                 )}
                 <div className='after' onClick={this.onStep(index, true)} />
                 <div className='before' onClick={this.onStep(index, false)} />

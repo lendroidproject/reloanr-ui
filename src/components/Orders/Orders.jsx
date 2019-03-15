@@ -130,8 +130,6 @@ class Orders extends Component {
       onCreateOrder: LendroidJS.onCreateOrder,
       onWrapETH: LendroidJS.onWrapETH,
       onAllowance: LendroidJS.onAllowance,
-      getOffers: LendroidJS.fetchOrders,
-      getPositions: LendroidJS.onFetchPositions,
       onPostLoans: LendroidJS.onPostLoans,
       onFillLoan: LendroidJS.onFillLoan,
       onClosePosition: LendroidJS.onClosePosition,
@@ -175,7 +173,7 @@ class Orders extends Component {
         </div>
         :
         metamaskChecking || metamaskLogged ?
-          <div class="Checking">{metamaskChecking ? 'Metamask Checking...' : 'Loading...'}</div>
+          <div className="Checking">{metamaskChecking ? 'Metamask Checking...' : 'Loading...'}</div>
           :
           <Redirect to="/metamask-not-logged-in" />
     )

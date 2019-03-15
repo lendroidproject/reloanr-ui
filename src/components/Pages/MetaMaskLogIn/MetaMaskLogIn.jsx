@@ -52,7 +52,7 @@ class MetaMaskLogIn extends Component {
             <div className="MetaMaskLogIn">
               <h2 className="Title">Login to MetaMask</h2>
               <img className="MetaMaskLogInImg" src={MetaMaskLogInImg} />
-              <p class="Description">Your Chrome Plugin is not active.</p>
+              <p className="Description">Your Chrome Plugin is not active.</p>
             </div>
           </div>
     )

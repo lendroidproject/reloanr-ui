@@ -128,9 +128,11 @@ class List extends Component {
     )
 
     methods.onTopUpPosition(data, topupCollateralAmount, (err, hash) => {
-      if (err) return
-      console.log(`Reload Loan with address of <${currentData.address}>`)
-      setTimeout(methods.getPositions, 5000, currentData.address)
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(`[EVENT] : Position TopUp with HASH -> ${hash}`)
+      }
     })
   }
 
@@ -143,7 +145,11 @@ class List extends Component {
       if (err) return
 
       methods.onDeleteOrder(data.id, (err, res) => {
-        setTimeout(methods.getOffers, 1000)
+        if (err) {
+          console.log(err)
+        } else {
+          console.log(`[EVENT] : Order Deleted with ID -> ${data.id}`)
+        }
       })
     }
 
@@ -154,9 +160,11 @@ class List extends Component {
     const { methods } = this.props
     console.log(data, param)
     methods.onLiquidatePosition(data, (err, hash) => {
-      if (err) return
-      console.log(hash)
-      setTimeout(methods.getPositions, 5000, data.address)
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(`[EVENT] : Position Liquidated with HASH -> ${hash}`)
+      }
     })
   }
 
@@ -164,19 +172,11 @@ class List extends Component {
     const { methods } = this.props
     console.log(data, param)
     methods.onClosePosition(data, (err, hash) => {
-      if (err) return
-      console.log(hash)
-      setTimeout(methods.getPositions, 5000)
-    })
-  }
-
-  onClosePosition(data, param) {
-    const { methods } = this.props
-    console.log(data, param)
-    methods.onClosePosition(data, (err, hash) => {
-      if (err) return
-      console.log(hash)
-      setTimeout(methods.getPositions, 5000)
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(`[EVENT] : Position Closed with HASH -> ${hash}`)
+      }
     })
   }
 
@@ -228,9 +228,13 @@ class List extends Component {
           )}
           <div className='Lists'>
             {filteredData.map((d, index) => (
-              <div class={`List ${classes}`}>
-                {data.headers.map(h => (
-                  <div className={`ListField ${h.key}`} style={h.style}>
+              <div className={`List ${classes}`} key={index}>
+                {data.headers.map((h, hIndex) => (
+                  <div
+                    key={hIndex}
+                    className={`ListField ${h.key}`}
+                    style={h.style}
+                  >
                     <div className='Label'>{h.label}</div>
                     <div className='Data'>
                       {h.key === 'health' ? (
@@ -271,8 +275,9 @@ class List extends Component {
                         <DropdownMenu>
                           {data.action.items
                             .filter(item => item.enabled(d))
-                            .map(item => (
+                            .map((item, iIndex) => (
                               <DropdownItem
+                                key={iIndex}
                                 onClick={() => this.onAction(item, d)}
                               >
                                 {item.label}
@@ -295,7 +300,7 @@ class List extends Component {
               </div>
             ))}
             {filteredData.length === 0 && (
-              <div class={`List ${classes}`}>
+              <div className={`List ${classes}`}>
                 {data.loading ? 'Loading' : 'No Data'}
               </div>
             )}
@@ -328,8 +333,8 @@ class List extends Component {
           <div className='ModalBody'>
             <div className='Info'>
               <table>
-                {Object.keys(modalData).map(key => (
-                  <tr>
+                {Object.keys(modalData).map((key, kIndex) => (
+                  <tr key={kIndex}>
                     <td>{key}</td>
                     <td>{modalData[key].toString()}</td>
                   </tr>
