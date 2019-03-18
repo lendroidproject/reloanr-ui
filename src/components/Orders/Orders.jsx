@@ -21,16 +21,15 @@ class Orders extends Component {
     super(props)
 
     if (window.web3) {
-
       this.state = {
         LendroidJS: {},
         Tables: [],
         metamaskChecking: true,
-        metamaskLogged: false,
+        metamaskLogged: false
       }
     } else {
       this.state = {
-        LendroidJS: {},
+        LendroidJS: {}
       }
     }
 
@@ -38,25 +37,25 @@ class Orders extends Component {
   }
 
   componentDidMount() {
-    this.checkMetamask();
+    this.checkMetamask()
   }
 
   checkMetamask() {
     if (window.web3) {
       this.setState({
         metamaskChecking: true,
-        metamaskLogged: false,
+        metamaskLogged: false
       })
 
       window.web3.eth.getAccounts((err, accounts) => {
         if (accounts && accounts.length > 0) {
           const newState = {
             metamaskLogged: true,
-            metamaskChecking: false,
+            metamaskChecking: false
           }
           if (Object.keys(this.state.LendroidJS).length === 0) {
             const LendroidJS = new Lendroid({
-              stateCallback: () => this.forceUpdate(),
+              stateCallback: () => this.forceUpdate()
             })
             newState['LendroidJS'] = LendroidJS
             newState['Tables'] = CreateTables(LendroidJS.web3Utils)
@@ -64,7 +63,7 @@ class Orders extends Component {
           this.setState(newState)
         } else {
           this.setState({
-            metamaskChecking: false,
+            metamaskChecking: false
           })
         }
       })
@@ -73,28 +72,46 @@ class Orders extends Component {
 
   getPositionsData() {
     const { LendroidJS } = this.state
-    if (!LendroidJS.contracts || !LendroidJS.contracts.positions) return {
-      lent: [],
-      borrowed: [],
-    }
-    const { contracts: { positions }, exchangeRates: { currentDAIExchangeRate } } = LendroidJS
+    if (!LendroidJS.contracts || !LendroidJS.contracts.positions)
+      return {
+        lent: [],
+        borrowed: []
+      }
+    const {
+      contracts: { positions },
+      exchangeRates: { currentDAIExchangeRate }
+    } = LendroidJS
     if (!positions || currentDAIExchangeRate === 0) return {}
 
     const positionsData = {
       lent: positions.lent.map(position => {
-        const currentCollateralAmount = position.origin.loanAmountBorrowed / currentDAIExchangeRate
-        const health = parseInt(position.origin.collateralAmount / currentCollateralAmount * 100, 10)
-        return Object.assign({
-          health: Math.min(health, 100)
-        }, position)
+        const currentCollateralAmount =
+          position.origin.loanAmountBorrowed / currentDAIExchangeRate
+        const health = parseInt(
+          (position.origin.collateralAmount / currentCollateralAmount) * 100,
+          10
+        )
+        return Object.assign(
+          {
+            health: Math.min(health, 100)
+          },
+          position
+        )
       }),
       borrowed: positions.borrowed.map(position => {
-        const currentCollateralAmount = position.origin.loanAmountBorrowed / currentDAIExchangeRate
-        const health = parseInt(position.origin.collateralAmount / currentCollateralAmount * 100, 10)
-        return Object.assign({
-          health: Math.min(health, 100)
-        }, position)
-      }),
+        const currentCollateralAmount =
+          position.origin.loanAmountBorrowed / currentDAIExchangeRate
+        const health = parseInt(
+          (position.origin.collateralAmount / currentCollateralAmount) * 100,
+          10
+        )
+        return Object.assign(
+          {
+            health: Math.min(health, 100)
+          },
+          position
+        )
+      })
     }
     return positionsData
   }
@@ -103,11 +120,10 @@ class Orders extends Component {
     let url = API.baseURL
     url += API.endPoints[endPoint]
 
-    axios.post(url, data)
-      .then(res => {
-        const result = res.data
-        if (cb) cb(result)
-      })
+    axios.post(url, data).then(res => {
+      const result = res.data
+      if (cb) cb(result)
+    })
   }
 
   render() {
@@ -115,11 +131,18 @@ class Orders extends Component {
       LendroidJS = {},
       Tables,
       metamaskChecking,
-      metamaskLogged,
+      metamaskLogged
     } = this.state
 
-    if (!window.web3) return <Redirect to="/metamask-missing" />
-    const { loading = {}, orders = { myOrders: {} }, exchangeRates = {}, contracts, web3Utils, metamask = {} } = LendroidJS
+    if (!window.web3) return <Redirect to='/metamask-missing' />
+    const {
+      loading = {},
+      orders = { myOrders: {} },
+      exchangeRates = {},
+      contracts,
+      web3Utils,
+      metamask = {}
+    } = LendroidJS
     const { address, network } = metamask
     const { currentWETHExchangeRate, currentDAIExchangeRate } = exchangeRates
     const offers = orders.orders
@@ -138,44 +161,69 @@ class Orders extends Component {
       onFillOrderServer: LendroidJS.onFillOrderServer,
       onDeleteOrder: LendroidJS.onDeleteOrder,
       onCancelOrder: LendroidJS.onCancelOrder,
-      startAsync,
+      startAsync
     }
 
     if (!(network && address) && !metamaskChecking) this.checkMetamask()
 
-    return (
-      network && address ?
-        <div className="OrdersWrapper">
-          <Header
-            address={address} contracts={contracts}
-          />
-          <FormTab methods={methods}
-            address={address} contracts={contracts}
-            currentDAIExchangeRate={currentDAIExchangeRate}
-            web3Utils={web3Utils}
-            loading={loading} />
-          <TableGroup methods={methods}
-            address={address}
-            data={{ left: Tables[0], right: Tables[1], classes: "first", data: { offers } }}
-            web3Utils={web3Utils}
-            loading={loading.orders} />
-          <ListGroup methods={methods}
-            address={address} contracts={contracts}
-            currentWETHExchangeRate={currentWETHExchangeRate} data={{ left: Tables[2], right: Tables[3], data: { myLendOffers, myBorrowOffers } }}
-            web3Utils={web3Utils}
-            loading={loading.orders}
-            style={{ marginBottom: 29 }} />
-          <ListGroup methods={methods}
-            address={address} contracts={contracts}
-            currentWETHExchangeRate={currentWETHExchangeRate} data={{ left: Tables[4], right: Tables[5], data: positions, classes: 'Positions' }}
-            web3Utils={web3Utils}
-            loading={loading.positions} />
-        </div>
-        :
-        metamaskChecking || metamaskLogged ?
-          <div className="Checking">{metamaskChecking ? 'Metamask Checking...' : 'Loading...'}</div>
-          :
-          <Redirect to="/metamask-not-logged-in" />
+    return network && address ? (
+      <div className='OrdersWrapper'>
+        <Header address={address} contracts={contracts} />
+        <FormTab
+          methods={methods}
+          address={address}
+          contracts={contracts}
+          currentDAIExchangeRate={currentDAIExchangeRate}
+          web3Utils={web3Utils}
+          loading={loading}
+        />
+        <TableGroup
+          methods={methods}
+          address={address}
+          data={{
+            left: Tables[0],
+            right: Tables[1],
+            classes: 'first',
+            data: { offers }
+          }}
+          web3Utils={web3Utils}
+          loading={loading.orders}
+        />
+        <ListGroup
+          methods={methods}
+          address={address}
+          contracts={contracts}
+          currentWETHExchangeRate={currentWETHExchangeRate}
+          data={{
+            left: Tables[2],
+            right: Tables[3],
+            data: { myLendOffers, myBorrowOffers }
+          }}
+          web3Utils={web3Utils}
+          loading={loading.orders}
+          style={{ marginBottom: 29 }}
+        />
+        <ListGroup
+          methods={methods}
+          address={address}
+          contracts={contracts}
+          currentWETHExchangeRate={currentWETHExchangeRate}
+          data={{
+            left: Tables[4],
+            right: Tables[5],
+            data: positions,
+            classes: 'Positions'
+          }}
+          web3Utils={web3Utils}
+          loading={loading.positions}
+        />
+      </div>
+    ) : metamaskChecking || metamaskLogged ? (
+      <div className='Checking'>
+        {metamaskChecking ? 'Metamask Checking...' : 'Loading...'}
+      </div>
+    ) : (
+      <Redirect to='/metamask-not-logged-in' />
     )
   }
 }

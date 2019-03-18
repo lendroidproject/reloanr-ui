@@ -57,7 +57,7 @@ class FormTab extends Component {
 
       flagOnSubmit: false,
       flagOnWrapETH: false,
-      flagOnAllowance: false,
+      flagOnAllowance: false
     }
 
     this.onChange = this.onChange.bind(this)
