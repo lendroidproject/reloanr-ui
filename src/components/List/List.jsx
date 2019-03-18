@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import {
   Dropdown,
   DropdownToggle,
@@ -41,7 +40,8 @@ class List extends Component {
       modalAmountIsOpen: false,
       modalIsOpen: false,
       modalData: {},
-      currentData: null
+      currentData: null,
+      singleLoading: false
     }
 
     this.openModal = this.openModal.bind(this)
@@ -144,18 +144,27 @@ class List extends Component {
     const { methods } = this.props
 
     const cancelCallback = (err, result) => {
-      if (err) return
-
-      methods.onDeleteOrder(data.id, (err, res) => {
-        if (err) {
-          console.log(err)
-        } else {
-          console.log(`[EVENT] : Order Deleted with ID -> ${data.id}`)
-        }
-      })
+      if (err) {
+        this.setState({ singleLoading: false })
+        return
+      } else {
+        methods.onDeleteOrder(data.id, (err, res) => {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log(`[EVENT] : Order Deleted with ID -> ${data.id}`)
+          }
+          this.setState({ singleLoading: false })
+        })
+      }
     }
 
-    methods.onCancelOrder(data, cancelCallback)
+    this.setState(
+      {
+        singleLoading: true
+      },
+      () => methods.onCancelOrder(data, cancelCallback)
+    )
   }
 
   onLiquidatePosition(data, param) {
@@ -216,7 +225,8 @@ class List extends Component {
       topupCollateralAmount,
       currentData,
       modalIsOpen,
-      modalData
+      modalData,
+      singleLoading
     } = this.state
 
     return (
@@ -292,9 +302,16 @@ class List extends Component {
                   ) : (
                     <button
                       style={data.action.style}
-                      className={data.action.key}
-                      onClick={() => this.onAction(data.action, d)}
+                      className={`${data.action.key}`}
+                      onClick={() =>
+                        !singleLoading ? this.onAction(data.action, d) : null
+                      }
                     >
+                      {singleLoading && (
+                        <div className='Loading'>
+                          <div className='Loader' />
+                        </div>
+                      )}
                       {data.action.label}
                     </button>
                   )}
