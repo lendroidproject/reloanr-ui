@@ -274,12 +274,12 @@ const CreateTables = web3Utils => [
         filter: 'calcTerm'
       },
       {
-        label: 'Loan Health',
+        label: 'Health',
         key: 'health',
         suffix: '%'
       },
       {
-        label: 'Loan Status',
+        label: 'Status',
         key: 'status'
       }
     ],
@@ -352,12 +352,12 @@ const CreateTables = web3Utils => [
         filter: 'calcTerm'
       },
       {
-        label: 'Loan Health',
+        label: 'Health',
         key: 'health',
         suffix: '%'
       },
       {
-        label: 'Loan Status',
+        label: 'Status',
         key: 'status'
       }
     ],
