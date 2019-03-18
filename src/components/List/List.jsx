@@ -52,8 +52,13 @@ class List extends Component {
     this.setState({ [key]: true })
   }
 
-  closeModal(key) {
-    this.setState({ [key]: false, topupCollateralAmount: 0 })
+  closeModal(key, keep = false) {
+    const { singleLoading } = this.state
+    this.setState({
+      [key]: false,
+      topupCollateralAmount: 0,
+      singleLoading: keep ? singleLoading : false
+    })
   }
 
   getData(data) {
@@ -120,7 +125,7 @@ class List extends Component {
   }
 
   onSubmitTopupWithCollateral() {
-    this.closeModal('modalAmountIsOpen')
+    this.closeModal('modalAmountIsOpen', true)
 
     const { methods, web3Utils } = this.props
     const { currentData } = this.state
@@ -135,6 +140,7 @@ class List extends Component {
       } else {
         console.log(`[EVENT] : Position TopUp with HASH -> ${hash}`)
       }
+      this.setState({ singleLoading: false })
     })
   }
 
@@ -161,7 +167,7 @@ class List extends Component {
 
     this.setState(
       {
-        singleLoading: true
+        singleLoading: data.id
       },
       () => methods.onCancelOrder(data, cancelCallback)
     )
@@ -170,25 +176,40 @@ class List extends Component {
   onLiquidatePosition(data, param) {
     const { methods } = this.props
     console.log(data, param)
-    methods.onLiquidatePosition(data, (err, hash) => {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log(`[EVENT] : Position Liquidated with HASH -> ${hash}`)
-      }
-    })
+    this.setState(
+      {
+        singleLoading: data.address
+      },
+      () =>
+        methods.onLiquidatePosition(data, (err, hash) => {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log(`[EVENT] : Position Liquidated with HASH -> ${hash}`)
+          }
+          this.setState({ singleLoading: false })
+        })
+    )
   }
 
   onRepayLoan(data, param) {
     const { methods } = this.props
     console.log(data, param)
-    methods.onClosePosition(data, (err, hash) => {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log(`[EVENT] : Position Closed with HASH -> ${hash}`)
-      }
-    })
+
+    this.setState(
+      {
+        singleLoading: data.address
+      },
+      () =>
+        methods.onClosePosition(data, (err, hash) => {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log(`[EVENT] : Position Closed with HASH -> ${hash}`)
+          }
+          this.setState({ singleLoading: false })
+        })
+    )
   }
 
   onTopupWithCollateral(data, param) {
@@ -197,7 +218,8 @@ class List extends Component {
       {
         currentData: Object.assign(data),
         param,
-        topupCollateralAmount: 0
+        topupCollateralAmount: 0,
+        singleLoading: data.address
       },
       () => this.openModal('modalAmountIsOpen')
     )
@@ -283,7 +305,14 @@ class List extends Component {
                         <DropdownToggle
                           style={data.action.style}
                           className='close three-dot'
-                        />
+                          disabled={singleLoading === d.address}
+                        >
+                          {singleLoading === d.address && (
+                            <div className='Loading'>
+                              <div className='Loader' />
+                            </div>
+                          )}
+                        </DropdownToggle>
                         <DropdownMenu>
                           {data.action.items
                             .filter(item => item.enabled(d))
@@ -304,10 +333,12 @@ class List extends Component {
                       style={data.action.style}
                       className={`${data.action.key}`}
                       onClick={() =>
-                        !singleLoading ? this.onAction(data.action, d) : null
+                        singleLoading !== d.id
+                          ? this.onAction(data.action, d)
+                          : null
                       }
                     >
-                      {singleLoading && (
+                      {singleLoading === d.id && (
                         <div className='Loading'>
                           <div className='Loader' />
                         </div>
