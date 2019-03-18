@@ -315,7 +315,7 @@ class FormTab extends Component {
           className={`FormInput Button ${valid ? '' : 'Disabled'}`}
           onClick={valid ? onClick : null}
         >
-          {!valid && (
+          {valid == 2 && (
             <div className='Loading'>
               <div className='Loader' />
             </div>
@@ -361,7 +361,7 @@ class FormTab extends Component {
                     {this.renderInputs(FormInputs(true))}
                     {this.renderButton(
                       'Order',
-                      this.isValid(true) && !this.state.flagOnSubmit,
+                      this.state.flagOnSubmit ? 2 : this.isValid(true) ? 1 : 0,
                       this.onSubmit(true)
                     )}
                   </tr>
@@ -385,7 +385,7 @@ class FormTab extends Component {
                     {this.renderInputs(FormInputs(false))}
                     {this.renderButton(
                       'Order',
-                      this.isValid(false) && !this.state.flagOnSubmit,
+                      this.state.flagOnSubmit ? 2 : this.isValid(false) ? 1 : 0,
                       this.onSubmit(false)
                     )}
                   </tr>
@@ -408,8 +408,11 @@ class FormTab extends Component {
                     {this.renderInputs(WrapETHFormInputs)}
                     {this.renderButton(
                       'Submit',
-                      this.isValidForm(WrapETHFormInputs) &&
-                        !this.state.flagOnWrapETH,
+                      this.state.flagOnWrapETH
+                        ? 2
+                        : this.isValidForm(WrapETHFormInputs)
+                        ? 1
+                        : 0,
                       this.onWrapETH
                     )}
                   </tr>
@@ -425,8 +428,11 @@ class FormTab extends Component {
                     {this.renderInputs(AllowanceFormInputs)}
                     {this.renderButton(
                       'Submit',
-                      this.isValidForm(AllowanceFormInputs) &&
-                        !this.state.flagOnAllowance,
+                      this.state.flagOnAllowance
+                        ? 2
+                        : this.isValidForm(AllowanceFormInputs)
+                        ? 1
+                        : 0,
                       this.onAllowance
                     )}
                   </tr>
