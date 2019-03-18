@@ -315,6 +315,11 @@ class FormTab extends Component {
           className={`FormInput Button ${valid ? '' : 'Disabled'}`}
           onClick={valid ? onClick : null}
         >
+          {!valid && (
+            <div className='Loading'>
+              <div className='Loader' />
+            </div>
+          )}
           <div className='left' /> {title}
         </div>
       </td>
