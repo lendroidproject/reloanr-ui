@@ -233,6 +233,7 @@ class Table extends Component {
     const {
       postError,
       result,
+      approval,
       modalIsOpen,
       modalAmountIsOpen,
       currentData,
@@ -241,6 +242,9 @@ class Table extends Component {
       isLoading
     } = this.state
     const filteredData = this.getData(data)
+    const expireInSecond =
+      (approval._timestamps || [0])[0] -
+      parseInt(new Date().getTime() / 1000, 10)
 
     return (
       <div className='TableWrapper'>
@@ -304,22 +308,28 @@ class Table extends Component {
         </div>
         <Modal
           isOpen={modalIsOpen}
-          onRequestClose={() => this.closeModal('modalIsOpen')}
+          // onRequestClose={() => this.closeModal('modalIsOpen')}
           style={customStyles}
           contentLabel='Order Book'
         >
-          <h2>ORDER BOOK</h2>
-          <button onClick={() => this.closeModal('modalIsOpen')} />
+          <h2 className='normal'>
+            {postError
+              ? 'MESSAGE FROM WRANGLER'
+              : expireInSecond > 0
+              ? `APPROVAL FROM WRANGLER. EXPIRES IN ${expireInSecond}s`
+              : 'WRANGLER APPROVAL HAS EXPIRED.'}
+          </h2>
+          {/* <button onClick={() => this.closeModal('modalIsOpen')} /> */}
           <div className='ModalBody'>
-            {postError ? (
-              <div className='Error'>{postError.toString()}</div>
-            ) : (
-              <div>
-                {isLoading && (
-                  <div className='Loading'>
-                    <div className='Loader' />
-                  </div>
-                )}
+            <div>
+              {isLoading && (
+                <div className='Loading'>
+                  <div className='Loader' />
+                </div>
+              )}
+              {postError ? (
+                <div className='Error'>{postError.toString()}</div>
+              ) : (
                 <div className='Info'>
                   <table>
                     <tbody>
@@ -332,13 +342,21 @@ class Table extends Component {
                     </tbody>
                   </table>
                 </div>
-                <div className='Buttons'>
+              )}
+              <div className='Buttons'>
+                {!postError && (
                   <div className='Confirm' onClick={this.onConfirm.bind(this)}>
-                    Confirm
+                    Continue
                   </div>
+                )}
+                <div
+                  className='Confirm'
+                  onClick={() => this.closeModal('modalIsOpen')}
+                >
+                  Back to order book
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </Modal>
         <InputModal

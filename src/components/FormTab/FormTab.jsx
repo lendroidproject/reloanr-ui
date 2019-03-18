@@ -451,7 +451,7 @@ class FormTab extends Component {
           isOpen={modalIsOpen}
           title='Input You Private Key'
           description="Important! We don't use your private key for any other access. It's just for lock ETH while Making DAI. Thanks."
-          onRequestClose={() => this.closeModal('modalIsOpen')}
+          // onRequestClose={() => this.closeModal('modalIsOpen')}
           onChange={e => this.setState({ privateKey: e.target.value })}
           onSubmit={this.onMakerDAI.bind(this)}
           contentLabel='Private Key'

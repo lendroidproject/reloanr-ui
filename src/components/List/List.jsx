@@ -326,9 +326,9 @@ class List extends Component {
         />
         <Modal
           isOpen={modalIsOpen}
-          onRequestClose={() => this.closeModal('modalIsOpen')}
+          // onRequestClose={() => this.closeModal('modalIsOpen')}
           style={customStyles}
-          contentLabel='Order Book'
+          contentLabel={`'Order Book'`}
         >
           <h2>Position Detail</h2>
           <button onClick={() => this.closeModal('modalIsOpen')} />
