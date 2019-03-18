@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
+import { Steps, Hints } from 'intro.js-react'
 
 import { Lendroid } from 'lendroid'
 import { startAsync } from './Maker'
@@ -13,6 +14,7 @@ import Header from '../Header/Header'
 import CreateTables from '../../assets/Tables'
 import API from '../../assets/API'
 
+import 'intro.js/introjs.css'
 import 'react-tabs/style/react-tabs.scss'
 import './Orders.scss'
 
@@ -20,33 +22,76 @@ class Orders extends Component {
   constructor(props) {
     super(props)
 
-    if (window.web3) {
-      this.state = {
-        LendroidJS: {},
-        Tables: [],
-        metamaskChecking: true,
-        metamaskLogged: false
-      }
-    } else {
-      this.state = {
-        LendroidJS: {}
-      }
+    this.state = {
+      LendroidJS: {},
+      Tables: [],
+      metamaskChecking: true,
+      metamaskLogged: false,
+      stepsEnabled: true,
+      initialStep: 0,
+      steps: [
+        {
+          element: '.Address .Value',
+          intro: "Here's your Address"
+        },
+        {
+          element: '.Info1 .Value',
+          intro: "Here's your ETH balance"
+        },
+        {
+          element: '.Info2 .Value',
+          intro: "Here's your DAI balance"
+        },
+        {
+          element: '.Info3 .Value',
+          intro: "Here's your DAI Allowance"
+        },
+        {
+          element: '.TabWrapper',
+          intro: 'You can create Orders here'
+        }
+      ],
+      hintsEnabled: true,
+      hints: [
+        {
+          element: '.Address .Value',
+          hint: "Here's your Address",
+          hintPosition: 'middle-right'
+        },
+        {
+          element: '.Info1 .Value',
+          hint: "Here's your ETH balance",
+          hintPosition: 'middle-right'
+        },
+        {
+          element: '.Info2 .Value',
+          hint: "Here's your DAI balance",
+          hintPosition: 'middle-right'
+        },
+        {
+          element: '.Info3 .Value',
+          hint: "Here's your DAI Allowance",
+          hintPosition: 'middle-right'
+        },
+        {
+          element: '.TabWrapper',
+          hint: 'You can create Orders here',
+          hintPosition: 'top-right'
+        }
+      ]
     }
 
     this.apiPost = this.apiPost.bind(this)
   }
 
   componentDidMount() {
-    this.checkMetamask()
+    setTimeout(() => {
+      this.checkMetamask()
+    }, 500)
   }
 
   checkMetamask() {
     if (window.web3) {
-      this.setState({
-        metamaskChecking: true,
-        metamaskLogged: false
-      })
-
       window.web3.eth.getAccounts((err, accounts) => {
         if (accounts && accounts.length > 0) {
           const newState = {
@@ -126,6 +171,25 @@ class Orders extends Component {
     })
   }
 
+  onExit = () => {
+    this.setState(() => ({ stepsEnabled: false }))
+  }
+
+  renderIntro() {
+    const { stepsEnabled, steps, initialStep, hintsEnabled, hints } = this.state
+    return (
+      <div>
+        <Steps
+          enabled={stepsEnabled}
+          steps={steps}
+          initialStep={initialStep}
+          onExit={this.onExit}
+        />
+        <Hints enabled={hintsEnabled} hints={hints} />
+      </div>
+    )
+  }
+
   render() {
     const {
       LendroidJS = {},
@@ -168,6 +232,7 @@ class Orders extends Component {
 
     return network && address ? (
       <div className='OrdersWrapper'>
+        {this.renderIntro()}
         <Header address={address} contracts={contracts} />
         <FormTab
           methods={methods}

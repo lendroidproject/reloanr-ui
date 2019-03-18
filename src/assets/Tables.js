@@ -82,10 +82,9 @@ const CreateTables = web3Utils => [
     title: 'Borrow Order Book',
     headers: [
       {
-        label: 'Rate',
-        key: 'interestRate',
+        label: 'Amount',
+        key: 'loanAmount',
         precision: 3,
-        suffix: '%',
         style: { textAlign: 'left' }
       },
       {
@@ -94,9 +93,10 @@ const CreateTables = web3Utils => [
         filter: 'calcTerm'
       },
       {
-        label: 'Amount',
-        key: 'loanAmount',
-        precision: 3
+        label: 'Rate',
+        key: 'interestRate',
+        precision: 3,
+        suffix: '%'
       }
     ],
     data: {

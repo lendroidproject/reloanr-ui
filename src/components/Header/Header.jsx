@@ -31,15 +31,15 @@ class Header extends Component {
               <div className="Value">{this.toUpper(address)}</div>
             </div>
             <div className="Info">
-              <div className="SubInfo">
+              <div className="SubInfo Info1">
                 <div className="Label">Balance</div>
                 <div className="Value">{this.setPrecision(contracts.balances ? contracts.balances.ETH : 0, 3)} <span>ETH</span></div>
               </div>
-              <div className="SubInfo">
+              <div className="SubInfo Info2">
                 <div className="Label"></div>
                 <div className="Value">{this.setPrecision(contracts.balances ? contracts.balances.DAI : 0, 3)} <span>DAI</span></div>
               </div>
-              <div className="SubInfo">
+              <div className="SubInfo Info3">
                 <div className="Label">Allowance</div>
                 <div className="Value">{this.setPrecision(contracts.allowances ? contracts.allowances.DAI : 0, 2)} <span>DAI</span></div>
               </div>
