@@ -27,7 +27,7 @@ class InputModal extends Component {
       <div className='InputModalWrapper'>
         <Modal
           isOpen={props.isOpen}
-          onRequestClose={props.onRequestClose}
+          // onRequestClose={props.onRequestClose}
           style={customStyles}
           contentLabel={props.contentLabel}
         >
