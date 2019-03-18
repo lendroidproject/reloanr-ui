@@ -59,7 +59,7 @@ a.introjs-button:not([href]):not([tabindex]):hover {
   background: linear-gradient(90deg, #8155e9 0%, #a87df3 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=  '#8155e9', endColorstr='#a87df3',GradientType=1 );
 
-  margin: 10px;
+  margin: 0;
   min-width: 40px;
   text-align: center;
   text-transform: capitalize;
@@ -95,6 +95,12 @@ a.introjs-button:not([href]):not([tabindex]):hover {
   background: white;
   border: 3px solid #9166ed;
   color: #9166ed;
+}
+
+.introjs-tooltiptext {
+  p {
+    white-space: nowrap;
+  }
 }
 @font-face {
   font-family: "SFProText-Regular";
