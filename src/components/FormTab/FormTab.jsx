@@ -313,7 +313,7 @@ class FormTab extends Component {
       <td className='ButtonWrapper'>
         <div
           className={`FormInput Button ${valid ? '' : 'Disabled'}`}
-          onClick={valid ? onClick : null}
+          onClick={valid == 1 ? onClick : null}
         >
           {valid == 2 && (
             <div className='Loading'>
