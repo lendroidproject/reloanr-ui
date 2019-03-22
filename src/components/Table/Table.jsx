@@ -328,7 +328,21 @@ class Table extends Component {
                 </div>
               )}
               {postError ? (
-                <div className='Error'>{postError.toString()}</div>
+                <div className='Error'>
+                  {postError.response.status == 400 ? (
+                    <ul>
+                      {(
+                        postError.response.error || postError.response.data
+                      ).map(err => (
+                        <li>{err.message}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <ul>
+                      <li>{postError.response.data.message}</li>
+                    </ul>
+                  )}
+                </div>
               ) : (
                 <div className='Info'>
                   <table>

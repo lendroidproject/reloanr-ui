@@ -204,6 +204,9 @@ class List extends Component {
         methods.onClosePosition(data, (err, hash) => {
           if (err) {
             console.log(err)
+            if (err.message) {
+              alert(err.message)
+            }
           } else {
             console.log(`[EVENT] : Position Closed with HASH -> ${hash}`)
           }
