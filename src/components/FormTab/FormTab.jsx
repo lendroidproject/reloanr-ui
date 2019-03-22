@@ -239,7 +239,7 @@ class FormTab extends Component {
   }
 
   renderInputs(formInputs) {
-    const { contracts, loading } = this.props
+    const { contracts, loading, currentDAIExchangeRate } = this.props
     const formData = this.state
     contracts.token = formData.token
     const loadings = Object.assign({}, loading, { making: formData.making })
@@ -274,6 +274,7 @@ class FormTab extends Component {
             onChange={this.onChange.bind(this)}
             val={item.value ? item.value(contracts) : formData[item.key]}
             loading={item.loading ? loadings[item.loading] : false}
+            warning={(item.warning && item.warning.check(contracts, formData[item.key], currentDAIExchangeRate)) ? item.warning.message : null}
           />
         )}
       </td>

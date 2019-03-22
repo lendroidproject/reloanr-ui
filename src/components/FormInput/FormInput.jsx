@@ -99,7 +99,7 @@ class FormInput extends Component {
   }
 
   render() {
-    const { data, val, loading } = this.props
+    const { data, val, loading, warning } = this.props
     const { currentInput, currentValue } = this.state
     const values = this.getValues(data, val)
     const inputCount = values[0]
@@ -140,6 +140,7 @@ class FormInput extends Component {
                 )}
                 <div className='after' onClick={this.onStep(index, true)} />
                 <div className='before' onClick={this.onStep(index, false)} />
+                {!loading && warning && <div className='warning'>{warning}</div>}
               </div>
             )
           })}
