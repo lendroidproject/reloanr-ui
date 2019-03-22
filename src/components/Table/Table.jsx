@@ -245,6 +245,8 @@ class Table extends Component {
     const expireInSecond =
       (approval._timestamps || [0])[0] -
       parseInt(new Date().getTime() / 1000, 10)
+    const refreshing =
+      new Date().getTime() - new Date(data.lastFetchTime).getTime()
 
     return (
       <div className='TableWrapper'>
@@ -253,7 +255,12 @@ class Table extends Component {
             <div className='Loader' />
           </div>
         )}
-        <div className='Title'>{data.title}</div>
+        <div className='Title'>
+          {data.title}
+          <span>
+            refreshing in <b>{parseInt(30 - refreshing / 1000, 10)}</b> seconds
+          </span>
+        </div>
         <div className='tbl-header'>
           <table cellPadding='0' cellSpacing='0' border='0'>
             <thead>

@@ -14,10 +14,21 @@
     letter-spacing: 0.17px;
     line-height: 29px;
     padding: 0 40px;
+
+    display: flex;
+    justify-content: space-between;
     @media (max-width: 425px) {
-      padding: 0 0 0 15px;
+      padding: 0 15px;
       margin-bottom: 10px;
       font-size: 1.2em;
+      flex-direction: column-reverse;
+    }
+
+    span {
+      text-transform: capitalize;
+      font-size: 10px;
+      line-height: 16px;
+      text-align: right;
     }
   }
 

@@ -203,6 +203,7 @@ class Orders extends Component {
     const {
       loading = {},
       orders = { myOrders: {} },
+      lastFetchTime,
       exchangeRates = {},
       contracts,
       web3Utils,
@@ -254,6 +255,7 @@ class Orders extends Component {
           }}
           web3Utils={web3Utils}
           loading={loading.orders}
+          lastFetchTime={lastFetchTime}
         />
         <ListGroup
           methods={methods}
