@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import { Steps, Hints } from 'intro.js-react'
+import cookie from 'react-cookies'
 
 import { Lendroid } from 'lendroid'
 import { startAsync } from './Maker'
@@ -27,7 +28,7 @@ class Orders extends Component {
       Tables: [],
       metamaskChecking: true,
       metamaskLogged: false,
-      stepsEnabled: true,
+      stepsEnabled: cookie.load('tutor_status') ? false : true,
       initialStep: 0,
       steps: [
         {
@@ -100,8 +101,8 @@ class Orders extends Component {
           }
           if (Object.keys(this.state.LendroidJS).length === 0) {
             const LendroidJS = new Lendroid({
-              stateCallback: () => this.forceUpdate(),
-              apiLoanRequests: 'http://localhost:5000'
+              stateCallback: () => this.forceUpdate()
+              // apiLoanRequests: 'http://localhost:5000'
             })
             newState['LendroidJS'] = LendroidJS
             newState['Tables'] = CreateTables(LendroidJS.web3Utils)
@@ -173,6 +174,7 @@ class Orders extends Component {
   }
 
   onExit = () => {
+    cookie.save('tutor_status', true)
     this.setState(() => ({ stepsEnabled: false }))
   }
 
