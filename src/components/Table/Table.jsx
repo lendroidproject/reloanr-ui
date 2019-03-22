@@ -331,16 +331,12 @@ class Table extends Component {
                 <div className='Error'>
                   {postError.response.status == 400 ? (
                     <ul>
-                      {(
-                        postError.response.error || postError.response.data
-                      ).map(err => (
+                      {postError.response.data.message.error.map(err => (
                         <li>{err.message}</li>
                       ))}
                     </ul>
                   ) : (
-                    <ul>
-                      <li>{postError.response.data.message}</li>
-                    </ul>
+                    postError.response.data.message
                   )}
                 </div>
               ) : (

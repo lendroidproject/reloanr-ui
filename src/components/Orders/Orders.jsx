@@ -100,7 +100,8 @@ class Orders extends Component {
           }
           if (Object.keys(this.state.LendroidJS).length === 0) {
             const LendroidJS = new Lendroid({
-              stateCallback: () => this.forceUpdate()
+              stateCallback: () => this.forceUpdate(),
+              apiLoanRequests: 'http://localhost:5000'
             })
             newState['LendroidJS'] = LendroidJS
             newState['Tables'] = CreateTables(LendroidJS.web3Utils)
