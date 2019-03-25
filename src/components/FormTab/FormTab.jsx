@@ -30,10 +30,10 @@ class FormTab extends Component {
       allowance: 0,
 
       // Fee Form Inputs
-      relayerFeeLST: 1.0,
+      relayerFeeLST: 0,
       monitoringFeeLST: 1.0,
-      rolloverFeeLST: 1.0,
-      closureFeeLST: 1.0,
+      rolloverFeeLST: 0,
+      closureFeeLST: 0,
 
       // Wrap/Unwrap ETH Form Inputs
       ETHBalance: 0,
@@ -102,6 +102,15 @@ class FormTab extends Component {
         valid = false
       } else if (item.validation) {
         if (!item.validation(contracts, currentDAIExchangeRate)) valid = false
+      }
+    })
+    FeeFormInputs(isLend).forEach(item => {
+      if (item.required && Number(formData[item.key]) === 0) {
+        console.log(item)
+        valid = false
+      } else if (item.validation) {
+        console.log(item)
+        if (!item.validation(contracts, formData[item.key])) valid = false
       }
     })
     return valid

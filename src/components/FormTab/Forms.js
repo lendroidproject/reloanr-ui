@@ -37,7 +37,9 @@ export function FormInputs(isLend) {
         message: isLend
           ? value => `Please set DAI allowance of ${value} on the Allowance Tab`
           : (value, currentDAIExchangeRate) =>
-              `Please set WETH allowance of ${(value / currentDAIExchangeRate).toFixed(2)} on the Allowance Tab`
+              `Please set WETH allowance of ${(
+                value / currentDAIExchangeRate
+              ).toFixed(2)} on the Allowance Tab`
       }
     },
     {
@@ -49,7 +51,7 @@ export function FormInputs(isLend) {
         {
           precision: 3,
           arrow: true,
-          step: 0.1,
+          step: 1,
           unit: 1
         }
       ],
@@ -124,9 +126,17 @@ export function FeeFormInputs(isLend) {
           unit: 1
         }
       ],
+      required: true,
+      validation: (contracts, value) => {
+        if (isLend) {
+          return parseFloat(value) <= parseFloat(contracts.allowances['LST'])
+        } else {
+          return parseFloat(value) > 0
+        }
+      },
       warning: {
         check: (contracts, value) => {
-          console.log(contracts, value)
+          if (parseFloat(value) <= 0) return true
           if (isLend) {
             return parseFloat(value) > parseFloat(contracts.allowances['LST'])
           } else {
@@ -134,7 +144,10 @@ export function FeeFormInputs(isLend) {
           }
         },
         message: isLend
-          ? value => `Please set LST allowance of ${value} on the Allowance Tab`
+          ? value =>
+              parseFloat(value) > 0
+                ? `Please set LST allowance of ${value} on the Allowance Tab`
+                : `Monitoring fee cannot be 0`
           : value => `Monitoring fee cannot be 0`
       }
     },

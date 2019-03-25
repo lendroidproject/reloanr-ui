@@ -57,6 +57,7 @@
 
       &:read-only {
         background: rgba(0, 0, 0, .1);
+        cursor: not-allowed;
       }
     }
 
