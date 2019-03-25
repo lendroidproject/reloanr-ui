@@ -32,10 +32,16 @@ class FormInput extends Component {
     }
   }
 
-  onChange(e) {
-    this.setState({
-      currentValue: e.target.value
-    })
+  onChange(index) {
+    return e => {
+      const { data, val, onChange } = this.props
+      const values = this.getValues(data, val)
+      values[index + 1] = this.doubleDot(e.target.value)
+      onChange(data.key, this.getValue(values), data.affection)
+      this.setState({
+        currentValue: e.target.value
+      })
+    }
   }
 
   doubleDot(value) {
@@ -129,7 +135,7 @@ class FormInput extends Component {
                 <input
                   value={value}
                   onFocus={this.onFocus(item, index, values[index + 1])}
-                  onChange={this.onChange.bind(this)}
+                  onChange={this.onChange(index)}
                   onBlur={data.readOnly ? null : this.onBlur(index)}
                   min='0'
                   max={item.max}

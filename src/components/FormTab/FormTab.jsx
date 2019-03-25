@@ -284,7 +284,7 @@ class FormTab extends Component {
                       formData[item.key],
                       currentDAIExchangeRate
                     )
-                  ? item.warning.message(formData[item.key])
+                  ? item.warning.message(formData[item.key], currentDAIExchangeRate)
                   : null
                 : null
             }

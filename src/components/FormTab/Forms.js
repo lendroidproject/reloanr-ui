@@ -36,8 +36,8 @@ export function FormInputs(isLend) {
         },
         message: isLend
           ? value => `Please set DAI allowance of ${value} on the Allowance Tab`
-          : value =>
-              `Please set WETH allowance of ${value} on the Allowance Tab`
+          : (value, currentDAIExchangeRate) =>
+              `Please set WETH allowance of ${(value / currentDAIExchangeRate).toFixed(2)} on the Allowance Tab`
       }
     },
     {
@@ -130,7 +130,7 @@ export function FeeFormInputs(isLend) {
           if (isLend) {
             return parseFloat(value) > parseFloat(contracts.allowances['LST'])
           } else {
-            return Number(contracts.allowances['LST']) <= 0
+            return parseFloat(value) <= 0
           }
         },
         message: isLend
