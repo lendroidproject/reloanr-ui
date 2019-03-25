@@ -99,7 +99,7 @@ class FormInput extends Component {
   }
 
   render() {
-    const { data, val, loading, warning } = this.props
+    const { data, val, loading, warning, className } = this.props
     const { currentInput, currentValue } = this.state
     const values = this.getValues(data, val)
     const inputCount = values[0]
@@ -107,7 +107,7 @@ class FormInput extends Component {
     return (
       <div className='FormInputWrapper'>
         <div className='InputLabel'>{data.label}</div>
-        <div className='FormInputs'>
+        <div className={`FormInputs ${className || ''}`}>
           {data.inputs.map((item, index) => {
             const id = JSON.stringify(item) + index
             const value = currentInput === id ? currentValue : values[index + 1]
@@ -140,7 +140,9 @@ class FormInput extends Component {
                 )}
                 <div className='after' onClick={this.onStep(index, true)} />
                 <div className='before' onClick={this.onStep(index, false)} />
-                {!loading && warning && <div className='warning'>{warning}</div>}
+                {!loading && warning && (
+                  <div className='warning'>{warning}</div>
+                )}
               </div>
             )
           })}

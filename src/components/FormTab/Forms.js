@@ -102,7 +102,13 @@ export const FeeFormInputs = [
         suffix: 'LST',
         unit: 1
       }
-    ]
+    ],
+    readOnly: true,
+    warning: {
+      feature: true,
+      check: () => false,
+      message: 'Coming soon in v2'
+    }
   },
   {
     key: 'monitoringFeeLST',
@@ -137,7 +143,13 @@ export const FeeFormInputs = [
         suffix: 'LST',
         unit: 1
       }
-    ]
+    ],
+    readOnly: true,
+    warning: {
+      feature: true,
+      check: () => false,
+      message: 'Coming soon in v2'
+    }
   },
   {
     key: 'closureFeeLST',
@@ -150,7 +162,13 @@ export const FeeFormInputs = [
         suffix: 'LST',
         unit: 1
       }
-    ]
+    ],
+    readOnly: true,
+    warning: {
+      feature: true,
+      check: () => false,
+      message: 'Coming soon in v2'
+    }
   }
 ]
 

@@ -274,7 +274,20 @@ class FormTab extends Component {
             onChange={this.onChange.bind(this)}
             val={item.value ? item.value(contracts) : formData[item.key]}
             loading={item.loading ? loadings[item.loading] : false}
-            warning={(item.warning && item.warning.check(contracts, formData[item.key], currentDAIExchangeRate)) ? item.warning.message : null}
+            className={item.warning && item.warning.feature ? 'feature' : ''}
+            warning={
+              item.warning
+                ? item.warning.feature
+                  ? item.warning.message
+                  : item.warning.check(
+                      contracts,
+                      formData[item.key],
+                      currentDAIExchangeRate
+                    )
+                  ? item.warning.message
+                  : null
+                : null
+            }
           />
         )}
       </td>

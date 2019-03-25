@@ -1,16 +1,6 @@
 .FormInputWrapper {
   margin-bottom: 10px;
 
-  .warning {
-    position: absolute;
-    font-size: 10px;
-    line-height: 10px;
-    color: red;
-    min-width: 100%;
-    text-align: center;
-    top: calc(100% + 3px);
-  }
-
   .InputLabel {
     font-size: 12px;
     color: rgba(0, 0, 0, 0.3);
@@ -23,6 +13,20 @@
   .FormInputs {
     display: flex;
     justify-content: space-between;
+
+    &.feature .warning {
+      color: #9f74f1;
+    }
+
+    .warning {
+      position: absolute;
+      font-size: 10px;
+      line-height: 10px;
+      color: red;
+      min-width: 100%;
+      text-align: center;
+      top: calc(100% + 3px);
+    }
   }
 
   .FormInput {
