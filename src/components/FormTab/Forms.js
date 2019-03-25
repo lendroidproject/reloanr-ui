@@ -35,8 +35,9 @@ export function FormInputs(isLend) {
           return false
         },
         message: isLend
-          ? 'Please set DAI allowance from the Allowance tab'
-          : 'Please set WETH allowance from the Allowance tab'
+          ? value => `Please set DAI allowance of ${value} on the Allowance Tab`
+          : value =>
+              `Please set WETH allowance of ${value} on the Allowance Tab`
       }
     },
     {
@@ -90,87 +91,93 @@ export function FormInputs(isLend) {
   ]
 }
 
-export const FeeFormInputs = [
-  {
-    key: 'relayerFeeLST',
-    label: 'Relayer Fee',
-    width: 150,
-    output: val => val.toString(),
-    inputs: [
-      {
-        precision: 3,
-        suffix: 'LST',
-        unit: 1
+export function FeeFormInputs(isLend) {
+  return [
+    {
+      key: 'relayerFeeLST',
+      label: 'Relayer Fee',
+      width: 150,
+      output: val => val.toString(),
+      inputs: [
+        {
+          precision: 3,
+          suffix: 'LST',
+          unit: 1
+        }
+      ],
+      readOnly: true,
+      warning: {
+        feature: true,
+        check: () => false,
+        message: 'Coming soon in v2'
       }
-    ],
-    readOnly: true,
-    warning: {
-      feature: true,
-      check: () => false,
-      message: 'Coming soon in v2'
-    }
-  },
-  {
-    key: 'monitoringFeeLST',
-    label: 'Monitoring Fee',
-    width: 150,
-    output: val => val.toString(),
-    inputs: [
-      {
-        precision: 3,
-        suffix: 'LST',
-        unit: 1
+    },
+    {
+      key: 'monitoringFeeLST',
+      label: 'Monitoring Fee',
+      width: 150,
+      output: val => val.toString(),
+      inputs: [
+        {
+          precision: 3,
+          suffix: 'LST',
+          unit: 1
+        }
+      ],
+      warning: {
+        check: (contracts, value) => {
+          console.log(contracts, value)
+          if (isLend) {
+            return parseFloat(value) > parseFloat(contracts.allowances['LST'])
+          } else {
+            return Number(contracts.allowances['LST']) <= 0
+          }
+        },
+        message: isLend
+          ? value => `Please set LST allowance of ${value} on the Allowance Tab`
+          : value => `Monitoring fee cannot be 0`
       }
-    ],
-    warning: {
-      check: (contracts, value) => {
-        console.log(contracts, value)
-        if (parseFloat(value) > parseFloat(contracts.allowances['LST']))
-          return true
-        return false
-      },
-      message: 'Please set LST allowance from the Allowance tab'
-    }
-  },
-  {
-    key: 'rolloverFeeLST',
-    label: 'RollOver Fee',
-    width: 150,
-    output: val => val.toString(),
-    inputs: [
-      {
-        precision: 3,
-        suffix: 'LST',
-        unit: 1
+    },
+    {
+      key: 'rolloverFeeLST',
+      label: 'RollOver Fee',
+      width: 150,
+      output: val => val.toString(),
+      inputs: [
+        {
+          precision: 3,
+          suffix: 'LST',
+          unit: 1
+        }
+      ],
+      readOnly: true,
+      warning: {
+        feature: true,
+        check: () => false,
+        message: 'Coming soon in v2'
       }
-    ],
-    readOnly: true,
-    warning: {
-      feature: true,
-      check: () => false,
-      message: 'Coming soon in v2'
-    }
-  },
-  {
-    key: 'closureFeeLST',
-    label: 'Closure Fee',
-    width: 150,
-    output: val => val.toString(),
-    inputs: [
-      {
-        precision: 3,
-        suffix: 'LST',
-        unit: 1
+    },
+    {
+      key: 'closureFeeLST',
+      label: 'Closure Fee',
+      width: 150,
+      output: val => val.toString(),
+      inputs: [
+        {
+          precision: 3,
+          suffix: 'LST',
+          unit: 1
+        }
+      ],
+      readOnly: true,
+      warning: {
+        feature: true,
+        check: () => false,
+        message: 'Coming soon in v2'
       }
-    ],
-    readOnly: true,
-    warning: {
-      feature: true,
-      check: () => false,
-      message: 'Coming soon in v2'
     }
-  }
-]
+  ]
+}
 
 export const WrapETHFormInputs = [
   {

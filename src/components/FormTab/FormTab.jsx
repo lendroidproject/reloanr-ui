@@ -143,7 +143,7 @@ class FormTab extends Component {
           ? item.output(formData[item.key])
           : formData[item.key]
       })
-      FeeFormInputs.forEach(item => {
+      FeeFormInputs(isLend).forEach(item => {
         postData[item.key] = item.output
           ? item.output(formData[item.key])
           : formData[item.key]
@@ -284,7 +284,7 @@ class FormTab extends Component {
                       formData[item.key],
                       currentDAIExchangeRate
                     )
-                  ? item.warning.message
+                  ? item.warning.message(formData[item.key])
                   : null
                 : null
             }
@@ -294,7 +294,7 @@ class FormTab extends Component {
     ))
   }
 
-  renderFeeForm(showFeeForm) {
+  renderFeeForm(showFeeForm, isLend) {
     return (
       <table
         cellSpacing='15'
@@ -302,7 +302,7 @@ class FormTab extends Component {
       >
         <tbody>
           <tr>
-            {this.renderInputs(FeeFormInputs)}
+            {this.renderInputs(FeeFormInputs(isLend))}
             <td colSpan='1' className='Empty' />
           </tr>
         </tbody>
@@ -387,7 +387,7 @@ class FormTab extends Component {
               >
                 {`${showFeeForm ? 'Hide' : 'Show'} Fee Form`}
               </div>
-              {this.renderFeeForm(showFeeForm)}
+              {this.renderFeeForm(showFeeForm, true)}
             </FadeIn>
           </TabPanel>
           <TabPanel>
@@ -411,7 +411,7 @@ class FormTab extends Component {
               >
                 {`${showFeeForm ? 'Hide' : 'Show'} Fee Form`}
               </div>
-              {this.renderFeeForm(showFeeForm)}
+              {this.renderFeeForm(showFeeForm, false)}
             </FadeIn>
           </TabPanel>
           <TabPanel>
