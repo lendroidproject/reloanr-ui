@@ -158,6 +158,10 @@
           width: 100%;
           text-align: center;
 
+          &.Loading.Button {
+            cursor: not-allowed;
+          }
+
           &.Button {
             cursor: pointer;
             border: 0;

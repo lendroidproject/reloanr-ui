@@ -293,7 +293,10 @@ class FormTab extends Component {
                       formData[item.key],
                       currentDAIExchangeRate
                     )
-                  ? item.warning.message(formData[item.key], currentDAIExchangeRate)
+                  ? item.warning.message(
+                      formData[item.key],
+                      currentDAIExchangeRate
+                    )
                   : null
                 : null
             }
@@ -335,7 +338,9 @@ class FormTab extends Component {
     return (
       <td className='ButtonWrapper'>
         <div
-          className={`FormInput Button ${valid ? '' : 'Disabled'}`}
+          className={`FormInput Button ${valid ? '' : 'Disabled'} ${
+            valid == 2 ? 'Loading' : ''
+          }`}
           onClick={valid == 1 ? onClick : null}
         >
           {valid == 2 && (
