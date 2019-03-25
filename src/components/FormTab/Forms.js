@@ -86,26 +86,6 @@ export function FormInputs(isLend) {
           unit: 1 // 60
         }
       ]
-    },
-    {
-      key: 'allowance',
-      label: 'Allowance',
-      width: 150,
-      output: val => val.toString(),
-      inputs: [
-        {
-          precision: 3,
-          suffix: isLend ? 'DAI' : 'WETH',
-          unit: 1
-        }
-      ],
-      style: { paddingRight: 8 },
-      value: contracts =>
-        contracts.allowances
-          ? contracts.allowances[isLend ? 'DAI' : 'WETH'] || 0
-          : 0,
-      readOnly: true,
-      loading: 'allowance'
     }
   ]
 }

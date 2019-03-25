@@ -3,13 +3,12 @@
 
   .warning {
     position: absolute;
-    white-space: nowrap;
     font-size: 10px;
-    line-height: 13px;
+    line-height: 10px;
     color: red;
     min-width: 100%;
     text-align: center;
-    bottom: -17px;
+    top: calc(100% + 3px);
   }
 
   .InputLabel {

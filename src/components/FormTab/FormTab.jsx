@@ -290,7 +290,7 @@ class FormTab extends Component {
         <tbody>
           <tr>
             {this.renderInputs(FeeFormInputs)}
-            <td colSpan='2' className='Empty' />
+            <td colSpan='1' className='Empty' />
           </tr>
         </tbody>
       </table>
