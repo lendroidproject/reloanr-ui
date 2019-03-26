@@ -219,7 +219,7 @@ class List extends Component {
               )
             }
           } else {
-            console.log(`[EVENT] : Position Liquidated with HASH -> ${hash}`)
+            console.log(`[EVENT] : Position Liquidated with HASH ->`, hash)
           }
           this.setState({ singleLoading: false })
         })
@@ -247,7 +247,7 @@ class List extends Component {
               )
             }
           } else {
-            console.log(`[EVENT] : Position Closed with HASH -> ${hash}`)
+            console.log(`[EVENT] : Position Closed with HASH ->`, hash)
           }
           this.setState({ singleLoading: false })
         })

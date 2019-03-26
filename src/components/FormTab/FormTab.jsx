@@ -129,10 +129,8 @@ class FormTab extends Component {
     })
     FeeFormInputs(isLend).forEach(item => {
       if (item.required && Number(formData[item.key]) === 0) {
-        console.log(item)
         valid = false
       } else if (item.validation) {
-        console.log(item)
         if (!item.validation(contracts, formData[item.key])) valid = false
       }
     })
