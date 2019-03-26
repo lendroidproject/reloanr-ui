@@ -33,7 +33,9 @@ class Table extends Component {
     this.state = {
       modalIsOpen: false,
       modalAmountIsOpen: false,
+      modalErrorIsOpen: false,
       postError: null,
+      modalErr: 'Unknown',
       result: {},
       approval: {},
       currentData: null,
@@ -131,13 +133,24 @@ class Table extends Component {
                 }
               }
             )
+            this.setState(
+              {
+                isLoading: false
+              },
+              () => this.closeModal('modalIsOpen')
+            )
+          } else {
+            if (err.message) {
+              this.setState(
+                {
+                  isLoading: false,
+                  modalIsOpen: false,
+                  modalErr: err.message
+                },
+                () => this.openModal('modalErrorIsOpen')
+              )
+            }
           }
-          this.setState(
-            {
-              isLoading: false
-            },
-            () => this.closeModal('modalIsOpen')
-          )
         })
       }
     )
@@ -236,6 +249,8 @@ class Table extends Component {
       approval,
       modalIsOpen,
       modalAmountIsOpen,
+      modalErrorIsOpen,
+      modalErr,
       currentData,
       param,
       fillLoanAmount,
@@ -389,6 +404,21 @@ class Table extends Component {
           disabled={fillLoanAmount > (currentData ? currentData.loanAmount : 0)}
           isLoading={isLoading}
         />
+        <Modal
+          isOpen={modalErrorIsOpen}
+          style={customStyles}
+          contentLabel={`'Something went wrong'`}
+        >
+          <h2>Something went wrong</h2>
+          <button onClick={() => this.closeModal('modalErrorIsOpen')} />
+          <div className='ModalBody'>
+            <div className='Info Error'>
+              <div style={{ textAlign: 'center', marginBottom: 15 }}>
+                {modalErr}
+              </div>
+            </div>
+          </div>
+        </Modal>
       </div>
     )
   }

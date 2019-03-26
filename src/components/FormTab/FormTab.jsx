@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import FadeIn from 'react-fade-in'
+import Modal from 'react-modal'
 
 import FormInput from '../FormInput/FormInput'
 import {
@@ -16,11 +17,33 @@ import InputModal from '../common/InputModal/InputModal'
 import './FormTab.scss'
 import './ReactTab.scss'
 
+Modal.setAppElement('body')
+
+const customStyles = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    zIndex: 1000
+  },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    padding: '30px 20px 0',
+    minWidth: 500
+  }
+}
+
 class FormTab extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      modalErrorIsOpen: false,
+      modalErr: 'Unknown',
+
       // Lend/Borrow Form Inputs
       loanAmountOffered: 1.0,
       interestRatePerDay: 5,
@@ -174,7 +197,15 @@ class FormTab extends Component {
       delete postData.allowance
       postData.offerExpiry = parseInt(postData.offerExpiry / 1000).toString()
 
-      methods.onCreateOrder(postData, () => {
+      methods.onCreateOrder(postData, (err = {}, res) => {
+        if (err && err.message) {
+          this.setState(
+            {
+              modalErr: err.message
+            },
+            () => this.openModal('modalErrorIsOpen')
+          )
+        }
         this.setState({
           flagOnSubmit: false
         })
@@ -190,7 +221,15 @@ class FormTab extends Component {
       flagOnWrapETH: true
     })
 
-    methods.onWrapETH(amount, operation === 'Wrap', () => {
+    methods.onWrapETH(amount, operation === 'Wrap', (err = {}, res) => {
+      if (err && err.message) {
+        this.setState(
+          {
+            modalErr: err.message
+          },
+          () => this.openModal('modalErrorIsOpen')
+        )
+      }
       this.setState({
         flagOnWrapETH: false
       })
@@ -205,7 +244,15 @@ class FormTab extends Component {
       flagOnAllowance: true
     })
 
-    methods.onAllowance(token, newAllowance, () => {
+    methods.onAllowance(token, newAllowance, (err = {}, res) => {
+      if (err && err.message) {
+        this.setState(
+          {
+            modalErr: err.message
+          },
+          () => this.openModal('modalErrorIsOpen')
+        )
+      }
       this.setState({
         flagOnAllowance: false
       })
@@ -363,7 +410,13 @@ class FormTab extends Component {
   }
 
   render() {
-    const { showFeeForm, modalIsOpen, privateKey } = this.state
+    const {
+      showFeeForm,
+      modalIsOpen,
+      modalErrorIsOpen,
+      modalErr,
+      privateKey
+    } = this.state
 
     return (
       <div className='TabWrapper'>
@@ -494,6 +547,21 @@ class FormTab extends Component {
           type={'text'}
           disabled={!privateKey}
         />
+        <Modal
+          isOpen={modalErrorIsOpen}
+          style={customStyles}
+          contentLabel={`'Something went wrong'`}
+        >
+          <h2>Something went wrong</h2>
+          <button onClick={() => this.closeModal('modalErrorIsOpen')} />
+          <div className='ModalBody'>
+            <div className='Info Error'>
+              <div style={{ textAlign: 'center', marginBottom: 15 }}>
+                {modalErr}
+              </div>
+            </div>
+          </div>
+        </Modal>
       </div>
     )
   }

@@ -38,8 +38,10 @@ class List extends Component {
       dropdownOpen: {},
       topupCollateralAmount: 0,
       modalAmountIsOpen: false,
+      modalErrorIsOpen: false,
       modalIsOpen: false,
       modalData: {},
+      modalErr: 'Unknown',
       currentData: null,
       singleLoading: false
     }
@@ -137,6 +139,14 @@ class List extends Component {
     methods.onTopUpPosition(data, topupCollateralAmount, (err, hash) => {
       if (err) {
         console.log(err)
+        if (err.message) {
+          this.setState(
+            {
+              modalErr: err.message
+            },
+            () => this.openModal('modalErrorIsOpen')
+          )
+        }
       } else {
         console.log(`[EVENT] : Position TopUp with HASH -> ${hash}`)
       }
@@ -152,11 +162,27 @@ class List extends Component {
     const cancelCallback = (err, result) => {
       if (err) {
         this.setState({ singleLoading: false })
+        if (err.message) {
+          this.setState(
+            {
+              modalErr: err.message
+            },
+            () => this.openModal('modalErrorIsOpen')
+          )
+        }
         return
       } else {
         methods.onDeleteOrder(data.id, (err, res) => {
           if (err) {
             console.log(err)
+            if (err.message) {
+              this.setState(
+                {
+                  modalErr: err.message
+                },
+                () => this.openModal('modalErrorIsOpen')
+              )
+            }
           } else {
             console.log(`[EVENT] : Order Deleted with ID -> ${data.id}`)
           }
@@ -184,6 +210,14 @@ class List extends Component {
         methods.onLiquidatePosition(data, (err, hash) => {
           if (err) {
             console.log(err)
+            if (err.message) {
+              this.setState(
+                {
+                  modalErr: err.message
+                },
+                () => this.openModal('modalErrorIsOpen')
+              )
+            }
           } else {
             console.log(`[EVENT] : Position Liquidated with HASH -> ${hash}`)
           }
@@ -205,7 +239,12 @@ class List extends Component {
           if (err) {
             console.log(err)
             if (err.message) {
-              alert(err.message)
+              this.setState(
+                {
+                  modalErr: err.message
+                },
+                () => this.openModal('modalErrorIsOpen')
+              )
             }
           } else {
             console.log(`[EVENT] : Position Closed with HASH -> ${hash}`)
@@ -246,11 +285,13 @@ class List extends Component {
     const { data, classes } = this.props
     const filteredData = this.getData(data)
     const {
-      modalAmountIsOpen,
       topupCollateralAmount,
       currentData,
+      modalAmountIsOpen,
+      modalErrorIsOpen,
       modalIsOpen,
       modalData,
+      modalErr,
       singleLoading
     } = this.state
 
@@ -395,6 +436,21 @@ class List extends Component {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </div>
+        </Modal>
+        <Modal
+          isOpen={modalErrorIsOpen}
+          style={customStyles}
+          contentLabel={`'Something went wrong'`}
+        >
+          <h2>Something went wrong</h2>
+          <button onClick={() => this.closeModal('modalErrorIsOpen')} />
+          <div className='ModalBody'>
+            <div className='Info Error'>
+              <div style={{ textAlign: 'center', marginBottom: 15 }}>
+                {modalErr}
+              </div>
             </div>
           </div>
         </Modal>

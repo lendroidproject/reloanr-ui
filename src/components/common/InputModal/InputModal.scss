@@ -83,6 +83,17 @@
       padding: 10px;
       margin-top: 20px;
 
+      &.Error {
+        > div {
+          max-width: 500px;
+          overflow: hidden;
+          width: 400px;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+        }
+      }
+
       table {
         tr {
           td {
