@@ -49,9 +49,9 @@ class InputModal extends Component {
                 </div>
                 <div className='FormInputWrapper'>
                   <div
-                    className={`FormInput ${props.suffix ? 'Suffix' : ''} ${
-                      props.prefix ? 'Prefix' : ''
-                    }`}
+                    className={`FormInput ${
+                      props.suffix ? `Suffix ${props.suffix || ''}` : ''
+                    } ${props.prefix ? 'Prefix' : ''}`}
                   >
                     <div className='Prefix'>{props.prefix}</div>
                     <input
@@ -62,11 +62,16 @@ class InputModal extends Component {
                       max={props.max}
                       style={{ textAlign: props.type ? 'left' : 'center' }}
                     />
-                    <div className='Suffix'>{props.suffix}</div>
+                    <div className={`Suffix`}>{props.suffix}</div>
                     <div className='after' />
                     <div className='before' />
                   </div>
                 </div>
+                {props.value > props.max && (
+                  <div className='Warning'>{`Input exceed max value of ${
+                    props.max
+                  }`}</div>
+                )}
               </div>
               <div className='Buttons'>
                 <div

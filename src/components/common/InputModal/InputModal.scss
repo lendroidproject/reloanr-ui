@@ -43,6 +43,14 @@
     line-height: 100%;
     margin-bottom: 10px;
     margin-top: 25px;
+    position: relative;
+
+    .Warning {
+      position: absolute;
+      color: red;
+      font-size: 80%;
+      bottom: -15px;
+    }
 
     .Label {
       line-height: 35px;
