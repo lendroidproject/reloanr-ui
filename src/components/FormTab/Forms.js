@@ -59,7 +59,7 @@ export function FormInputs(isLend) {
     },
     {
       key: 'loanDuration',
-      label: 'Length',
+      label: 'Loan Term',
       width: 150,
       output: val => (val * 24 * 3600).toString(),
       inputs: [
@@ -74,7 +74,7 @@ export function FormInputs(isLend) {
     },
     {
       key: 'offerExpiry',
-      label: 'Order Expires',
+      label: 'Order Expiry',
       width: 150,
       output: val => {
         let ret = new moment.utc()

@@ -37,11 +37,15 @@ class Header extends Component {
               </div>
               <div className="SubInfo Info2">
                 <div className="Label"></div>
-                <div className="Value">{this.setPrecision(contracts.balances ? contracts.balances.DAI : 0, 3)} <span>DAI</span></div>
+                <div className="Value">{this.setPrecision(contracts.balances ? contracts.balances.WETH : 0, 3)} <span>WETH</span></div>
               </div>
               <div className="SubInfo Info3">
-                <div className="Label">Allowance</div>
-                <div className="Value">{this.setPrecision(contracts.allowances ? contracts.allowances.DAI : 0, 2)} <span>DAI</span></div>
+                <div className="Label"></div>
+                <div className="Value">{this.setPrecision(contracts.balances ? contracts.balances.DAI : 0, 3)} <span>DAI</span></div>
+              </div>
+              <div className="SubInfo Info4">
+                <div className="Label"></div>
+                <div className="Value">{this.setPrecision(contracts.balances ? contracts.balances.LST : 0, 3)} <span>LST</span></div>
               </div>
             </div>
           </div>

@@ -362,7 +362,9 @@ class FormTab extends Component {
         <tbody>
           <tr>
             {this.renderInputs(FeeFormInputs(isLend))}
-            <td colSpan='1' className='Empty' />
+            <td colSpan='1' className='Empty'>
+              {this.renderWrangler()}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -371,8 +373,8 @@ class FormTab extends Component {
 
   renderWrangler() {
     return (
-      <div className='Wrangler'>
-        <div className='Label'>Wrangler</div>
+      <div className='Wrangler FormInputWrapper'>
+        <div className='InputLabel'>Wrangler</div>
         <select>
           <option disabled>Wrangler Name</option>
           <option default>Default Simple Wrangler</option>
@@ -429,13 +431,12 @@ class FormTab extends Component {
             <Tab>Lend</Tab>
             <Tab>Borrow</Tab>
             <Tab>Wrap/Unwrap ETH</Tab>
-            <Tab>Allowance</Tab>
+            <Tab>Set Allowance</Tab>
             {/* <Tab>Maker DAI</Tab> */}
           </TabList>
 
           <TabPanel>
             <FadeIn>
-              {this.renderWrangler()}
               <table cellSpacing='15'>
                 <tbody>
                   <tr>

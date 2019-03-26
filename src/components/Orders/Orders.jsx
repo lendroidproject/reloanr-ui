@@ -41,11 +41,15 @@ class Orders extends Component {
         },
         {
           element: '.Info2 .Value',
-          intro: "Here's your DAI balance"
+          intro: "Here's your WETH balance"
         },
         {
           element: '.Info3 .Value',
-          intro: "Here's your DAI Allowance"
+          intro: "Here's your DAI balance"
+        },
+        {
+          element: '.Info4 .Value',
+          intro: "Here's your LST balance"
         },
         {
           element: '.TabWrapper',
@@ -66,12 +70,17 @@ class Orders extends Component {
         },
         {
           element: '.Info2 .Value',
-          hint: "Here's your DAI balance",
+          hint: "Here's your WETH balance",
           hintPosition: 'middle-right'
         },
         {
           element: '.Info3 .Value',
-          hint: "Here's your DAI Allowance",
+          hint: "Here's your DAI balance",
+          hintPosition: 'middle-right'
+        },
+        {
+          element: '.Info4 .Value',
+          hint: "Here's your LST balance",
           hintPosition: 'middle-right'
         },
         {

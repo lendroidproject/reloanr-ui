@@ -411,7 +411,7 @@ class List extends Component {
           contentLabel='Topup Collateral Amount'
           value={topupCollateralAmount}
           max={currentData ? currentData.amount : 0}
-          suffix='DAI'
+          suffix='WETH'
           disabled={
             topupCollateralAmount > (currentData ? currentData.amount : 0)
           }
