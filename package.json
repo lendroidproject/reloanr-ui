@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@makerdao/dai": "^0.7.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.1.1",
     "dotenv": "^6.0.0",
